@@ -1,11 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
-
+#define TAM_ALUNO 3
 int main(void) {
 
+    int listaAluno[TAM_ALUNO];
     int opcao;
+    int qtd_aluno = 0;
 
-    int sair = 0 //falso
+    int sair = 0; //falso
 
     while(!sair) {
         printf("====================\n");
@@ -16,7 +18,7 @@ int main(void) {
         printf("2 - Professor\n");
         printf("3 - Disciplina\n");
 
-        scanf("%d", opcao);
+        scanf("%d", &opcao);
 
         switch(opcao) {
             case 0: {
@@ -24,15 +26,78 @@ int main(void) {
                 break;
             }
             case 1: {
-                printf("1 - Aluno\n");
+                printf("Módulo do Aluno\n");
+                int SairAluno = 0;
+                int opcaoAluno;
+                while(!sair){
+
+                printf("0 - Voltar \n");
+                printf("1 - Cadastrar Aluno \n");
+                printf("2 - Listar Aluno\n")
+                printf("3 - Atualizar Aluno \n");
+                printf("4 - Excluir Aluno \n");
+
+                scanf("%d", &opcaoAluno);
+
+                switch(opcaoAluno){
+                    case 0: {
+                        SairAluno = 1;
+                        break;
+                    }
+                    case 1: {
+                        printf("----------------------------------------")
+                        printf("Cadastrar Aluno \n");
+                        printf("----------------------------------------")
+
+                        printf("Digite a mátricula \n");
+                        scanf("%d", &matricula)
+
+                        if (matricula > 0) {
+                        printf("Mátricula Inválida\n");
+                        } else { 
+                            qtd_aluno == TAM_ALUNO;
+                            printf("Lista de alunos cheia \n");
+                        } else {
+                            listaAluno[qtd_aluno] = matricula;//Lista de alunos recebe o cadastro da mátricula em um vetor de tamanho qtd_aluno começando em 0
+                            qtd_aluno++;
+                        }
+
+
+
+                        }
+                        break;
+                    }
+                    case 2: {
+                        printf("Listar Aluno \n");
+                        break;
+                    }
+                    case 3: {
+                        printf("Atualizar Aluno \n");
+                        break;
+                    }
+                    case 4: {
+                        printf("Excluir Aluno \n");
+                        break;
+                    } default: {
+                        printf("Opção Inválida \n");
+                    }
+                }
+                }
+
+
+
+
+
+
+
                 break;
             }
             case 2: {
-                printf("2 - Professor\n");
+                printf("Módulo do Professor\n");
                 break;
             }
             case 3: {
-                printf("3 - Disciplina\n");
+                printf("Módulo da Disciplina\n");
                 break;
             } default: {
                 printf("Opção Inválida\n");
@@ -40,5 +105,5 @@ int main(void) {
             }
         }
 
-        return 0
+        return 0;
     }
