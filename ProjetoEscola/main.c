@@ -6,7 +6,7 @@ int main(void) {
     int listaAluno[TAM_ALUNO];
     int opcao;
     int qtd_aluno = 0;
-    int matricula = 0;
+    
 
     int sair = 0; //falso
 
@@ -47,9 +47,10 @@ int main(void) {
                     }
                     case 1: {
                         printf("Cadastrar Aluno \n");
-                        if (qtd_aluno == TAM_ALUNO) 
+                        if (qtd_aluno == TAM_ALUNO) {
                             printf("Lista de alunos cheia \n");
                         } else {
+                            int matricula = 0;
                             printf("Digite a mátricula \n");
                             scanf("%d", &matricula);
                         if (matricula < 0) {
@@ -65,9 +66,9 @@ int main(void) {
                     case 2: {
                         printf("Listar Aluno \n");
                         if (qtd_aluno == 0) {
-                            printf("Lista De Alunos Vazia");
+                            printf("Lista De Alunos Vazia\n");
                         } else {    
-                        for(int i=0; i<TAM_ALUNO; i++)
+                        for(int i=0; i<qtd_aluno; i++)
                         {
                             printf("Mátricula: %d\n", listaAluno[i]);
                              }
