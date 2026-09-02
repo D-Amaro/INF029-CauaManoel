@@ -6,6 +6,7 @@ int main(void) {
     int listaAluno[TAM_ALUNO];
     int opcao;
     int qtd_aluno = 0;
+    int matricula = 0;
 
     int sair = 0; //falso
 
@@ -33,7 +34,7 @@ int main(void) {
 
                 printf("0 - Voltar \n");
                 printf("1 - Cadastrar Aluno \n");
-                printf("2 - Listar Aluno\n")
+                printf("2 - Listar Aluno\n");
                 printf("3 - Atualizar Aluno \n");
                 printf("4 - Excluir Aluno \n");
 
@@ -45,30 +46,30 @@ int main(void) {
                         break;
                     }
                     case 1: {
-                        printf("----------------------------------------")
+                        printf("----------------------------------------");
                         printf("Cadastrar Aluno \n");
-                        printf("----------------------------------------")
+                        printf("----------------------------------------");
 
                         printf("Digite a mátricula \n");
-                        scanf("%d", &matricula)
+                        scanf("%d", &matricula);
 
-                        if (matricula > 0) {
+                        if (matricula < 0) {
                         printf("Mátricula Inválida\n");
-                        } else { 
-                            qtd_aluno == TAM_ALUNO;
+                        } else if (qtd_aluno == TAM_ALUNO)  { 
                             printf("Lista de alunos cheia \n");
                         } else {
                             listaAluno[qtd_aluno] = matricula;//Lista de alunos recebe o cadastro da mátricula em um vetor de tamanho qtd_aluno começando em 0
                             qtd_aluno++;
-                        }
-
-
-
+                            }
                         }
                         break;
-                    }
+
                     case 2: {
                         printf("Listar Aluno \n");
+                        for(int i=0; i<TAM_ALUNO; i++)
+                        {
+                            printf("Mátricula: %d\n", listaAluno[i]);
+                        }
                         break;
                     }
                     case 3: {
