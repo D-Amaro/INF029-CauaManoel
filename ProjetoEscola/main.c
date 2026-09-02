@@ -46,32 +46,35 @@ int main(void) {
                         break;
                     }
                     case 1: {
-                        printf("----------------------------------------");
                         printf("Cadastrar Aluno \n");
-                        printf("----------------------------------------");
-
-                        printf("Digite a mátricula \n");
-                        scanf("%d", &matricula);
-
-                        if (matricula < 0) {
-                        printf("Mátricula Inválida\n");
-                        } else if (qtd_aluno == TAM_ALUNO)  { 
+                        if (qtd_aluno == TAM_ALUNO) 
                             printf("Lista de alunos cheia \n");
                         } else {
+                            printf("Digite a mátricula \n");
+                            scanf("%d", &matricula);
+                        if (matricula < 0) {
+                            printf("Mátricula Inválida\n");                         
+                        }
                             listaAluno[qtd_aluno] = matricula;//Lista de alunos recebe o cadastro da mátricula em um vetor de tamanho qtd_aluno começando em 0
                             qtd_aluno++;
+                            printf("Mátriculado com sucesso\n");
                             }
                         }
                         break;
 
                     case 2: {
                         printf("Listar Aluno \n");
+                        if (qtd_aluno == 0) {
+                            printf("Lista De Alunos Vazia");
+                        } else {    
                         for(int i=0; i<TAM_ALUNO; i++)
                         {
                             printf("Mátricula: %d\n", listaAluno[i]);
+                             }
                         }
                         break;
                     }
+                    
                     case 3: {
                         printf("Atualizar Aluno \n");
                         break;
