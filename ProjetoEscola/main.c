@@ -1,13 +1,19 @@
 #include <stdlib.h>
 #include <stdio.h>
 #define TAM_ALUNO 3
+
+typedef struct alu {
+    int matricula;
+    char sexo;
+    int ativo;
+} Aluno;
+
 int main(void) {
 
-    int listaAluno[TAM_ALUNO];
+    Aluno listaAluno[TAM_ALUNO];
     int opcao;
     int qtd_aluno = 0;
-    
-
+    int matricula = 0;
     int sair = 0; //falso
 
     while(!sair) {
@@ -50,13 +56,14 @@ int main(void) {
                         if (qtd_aluno == TAM_ALUNO) {
                             printf("Lista de alunos cheia \n");
                         } else {
-                            int matricula = 0;
+                            
                             printf("Digite a mátricula \n");
                             scanf("%d", &matricula);
                         if (matricula < 0) {
                             printf("Mátricula Inválida\n");                         
                         }
-                            listaAluno[qtd_aluno] = matricula;//Lista de alunos recebe o cadastro da mátricula em um vetor de tamanho qtd_aluno começando em 0
+                            listaAluno[qtd_aluno].matricula = matricula;//Lista de alunos recebe o cadastro da mátricula em um vetor de tamanho qtd_aluno começando em 0
+                            listaAluno[qtd_aluno].ativo = 1;
                             qtd_aluno++;
                             printf("Mátriculado com sucesso\n");
                             }
@@ -70,7 +77,8 @@ int main(void) {
                         } else {    
                         for(int i=0; i<qtd_aluno; i++)
                         {
-                            printf("Mátricula: %d\n", listaAluno[i]);
+                            if (listaAluno[i].ativo)
+                            printf("Mátricula: %d\n", listaAluno[i].matricula);
                              }
                         }
                         break;
@@ -82,8 +90,29 @@ int main(void) {
                     }
                     case 4: {
                         printf("Excluir Aluno \n");
+                        printf("Digite a mátricula: \n");
+                        scanf("%d", &matricula);
+                        int achou = 0;
+                        if (matricula < 0) {
+                            printf("Mátricula Inválida \n");
+                            } else {
+                                for(int i=0; i < qtd_aluno; i++) 
+                                { 
+                                    if (matricula == listaAluno[i].matricula) {
+                                    // exclusão lógica
+                                    listaAluno[i].ativo = -1;
+                                    achou = 1;
+                                    break;
+                                    }
+                                }
+                                if (achou)
+                                    printf("Aluno excluido com sucesso \n");
+                                else   
+                                    printf("Mátricula inexistente \n");
+                            }
+                        }
                         break;
-                    } default: {
+                    default: {
                         printf("Opção Inválida \n");
                     }
                 }
