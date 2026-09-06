@@ -77,9 +77,9 @@ int main(void) {
                         } else {    
                         for(int i=0; i<qtd_aluno; i++)
                         {
-                            if (listaAluno[i].ativo)
+                            if (listaAluno[i].ativo == 1)
                             printf("Mátricula: %d\n", listaAluno[i].matricula);
-                             }
+                            }
                         }
                         break;
                     }
@@ -101,6 +101,13 @@ int main(void) {
                                     if (matricula == listaAluno[i].matricula) {
                                     // exclusão lógica
                                     listaAluno[i].ativo = -1;
+                                    for(int j=i; j<qtd_aluno - 1; j++) { // shift: move alunos da frente para uma casa anterior
+                                        listaAluno[j].matricula = listaAluno[j+1].matricula; // posição J recebe 
+                                        listaAluno[j].sexo = listaAluno[j+1].sexo;
+                                        listaAluno[j].ativo = listaAluno[j+1].ativo;
+                                    }
+                                    
+                                    qtd_aluno--; //decrementa a quantidade de alunos
                                     achou = 1;
                                     break;
                                     }
