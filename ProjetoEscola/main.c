@@ -2,11 +2,23 @@
 #include <stdio.h>
 #define TAM_ALUNO 3
 
+#define CAD_ALUNO_SUCESSO -1
+#define MATRICULA_INVALIDA -2
+#define LISTA_CHEIA -3
+
 typedef struct alu {
     int matricula;
     char sexo;
     int ativo;
 } Aluno;
+
+//protótipos
+int menuGeral();
+int menuAluno();
+int CadastrarAluno(Aluno listaAluno[], int qtd_aluno);
+
+
+
 
 int main(void) {
 
@@ -17,15 +29,8 @@ int main(void) {
     int sair = 0; //falso
 
     while (!sair) {
-        printf("====================\n");
-        printf("Projeto Escola\n");
-        printf("====================\n");
-        printf("0 - Sair\n");
-        printf("1 - Aluno\n");
-        printf("2 - Professor\n");
-        printf("3 - Disciplina\n");
-
-        scanf("%d", &opcao);
+    
+       opcao = menuGeral();
 
         switch (opcao) {
             case 0: {
@@ -36,15 +41,9 @@ int main(void) {
                 printf("Módulo do Aluno\n");
                 int SairAluno = 0;
                 int opcaoAluno;
-                while (!SairAluno) {
+                while(!SairAluno){
 
-                    printf("0 - Voltar \n");
-                    printf("1 - Cadastrar Aluno \n");
-                    printf("2 - Listar Aluno\n");
-                    printf("3 - Atualizar Aluno \n");
-                    printf("4 - Excluir Aluno \n");
-
-                    scanf("%d", &opcaoAluno);
+                   opcaoAluno = menuAluno();
 
                     switch (opcaoAluno) {
                         case 0: {
@@ -52,21 +51,18 @@ int main(void) {
                             break;
                         }
                         case 1: {
-                            printf("Cadastrar Aluno \n");
-                            if (qtd_aluno == TAM_ALUNO) {
-                                printf("Lista de alunos cheia \n");
-                            } else {
-
-                                printf("Digite a mátricula \n");
-                                scanf("%d", &matricula);
-                                if (matricula < 0) {
-                                    printf("Mátricula Inválida\n");
-                                }
-                                listaAluno[qtd_aluno].matricula = matricula;//Lista de alunos recebe o cadastro da mátricula em um vetor de tamanho qtd_aluno começando em 0
-                                listaAluno[qtd_aluno].ativo = 1;
-                                qtd_aluno++;
-                                printf("Mátriculado com sucesso\n");
+                            
+                            int retorno = CadastrarAluno(listaAluno, qtd_aluno);
+                            
+                            if (retorno == LISTA_CHEIA)
+                                printf("Lista de aluno cheia \n");
+                            else if (retorno == MATRICULA_INVALIDA)
+                                printf("Mátricula Inválida \n");
+                            else {
+                                printf("Cadastrado com Sucesso \n");
+                            qtd_aluno++;
                             }
+
                             break;
                         }
                         case 2: {
@@ -96,12 +92,12 @@ int main(void) {
                                 {
                                     if (matricula == listaAluno[i].matricula && listaAluno[i].ativo) {
                                         // atualizacao
-                                        printf("Digite a nova mátricula: \n")
-                                        scanf("%d", &novamatricula)
+                                        printf("Digite a nova mátricula: \n");
+                                        scanf("%d", &novamatricula);
                                         // resolver questão de mátricula negativa
 
                                             listaAluno[i].matricula = novamatricula; 
-                                        }
+                                        
                                         achou = 1;
                                         break;
                                     }
@@ -160,11 +156,65 @@ int main(void) {
                 printf("Módulo da Disciplina\n");
                 break;
             }
-            default: {
+             default: {
                 printf("Opção Inválida\n");
             }
         }
     }
 
     return 0;
+}
+
+// Funções
+
+int menuGeral() {
+    
+    int opcao;
+
+    printf("====================\n");
+    printf("Projeto Escola\n");
+    printf("====================\n");
+    printf("0 - Sair\n");
+    printf("1 - Aluno\n");
+    printf("2 - Professor\n");
+    printf("3 - Disciplina\n");
+
+    scanf("%d", &opcao);
+
+    return opcao;
+}
+
+int menuAluno() {
+
+    int opcaoAluno;
+
+    printf("0 - Voltar \n");
+    printf("1 - Cadastrar Aluno \n");
+    printf("2 - Listar Aluno\n");
+    printf("3 - Atualizar Aluno \n");
+    printf("4 - Excluir Aluno \n");
+
+    scanf("%d", &opcaoAluno);
+
+    return opcaoAluno;
+}
+
+int CadastrarAluno(Aluno listaAluno[], int qtd_aluno){
+// variaveis usadas na função mencionadas na declaração
+
+    printf("Cadastrar Aluno \n");
+    if (qtd_aluno == TAM_ALUNO) {
+        return LISTA_CHEIA;
+    } else {
+        printf("Digite a mátricula \n");
+        int matricula;
+        scanf("%d", &matricula);
+        if (matricula < 0) {
+            return MATRICULA_INVALIDA; 
+        }
+        listaAluno[qtd_aluno].matricula = matricula;//Lista de alunos recebe o cadastro da mátricula em um vetor de tamanho qtd_aluno começando em 0
+        listaAluno[qtd_aluno].ativo = 1;
+        
+        return CAD_ALUNO_SUCESSO;
+        }
 }
