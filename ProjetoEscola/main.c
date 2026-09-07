@@ -16,7 +16,7 @@ int main(void) {
     int matricula = 0;
     int sair = 0; //falso
 
-    while(!sair) {
+    while (!sair) {
         printf("====================\n");
         printf("Projeto Escola\n");
         printf("====================\n");
@@ -27,7 +27,7 @@ int main(void) {
 
         scanf("%d", &opcao);
 
-        switch(opcao) {
+        switch (opcao) {
             case 0: {
                 sair = 1;
                 break;
@@ -36,101 +36,120 @@ int main(void) {
                 printf("Módulo do Aluno\n");
                 int SairAluno = 0;
                 int opcaoAluno;
-                while(!sair){
+                while (!SairAluno) {
 
-                printf("0 - Voltar \n");
-                printf("1 - Cadastrar Aluno \n");
-                printf("2 - Listar Aluno\n");
-                printf("3 - Atualizar Aluno \n");
-                printf("4 - Excluir Aluno \n");
+                    printf("0 - Voltar \n");
+                    printf("1 - Cadastrar Aluno \n");
+                    printf("2 - Listar Aluno\n");
+                    printf("3 - Atualizar Aluno \n");
+                    printf("4 - Excluir Aluno \n");
 
-                scanf("%d", &opcaoAluno);
+                    scanf("%d", &opcaoAluno);
 
-                switch(opcaoAluno){
-                    case 0: {
-                        SairAluno = 1;
-                        break;
-                    }
-                    case 1: {
-                        printf("Cadastrar Aluno \n");
-                        if (qtd_aluno == TAM_ALUNO) {
-                            printf("Lista de alunos cheia \n");
-                        } else {
-                            
-                            printf("Digite a mátricula \n");
-                            scanf("%d", &matricula);
-                        if (matricula < 0) {
-                            printf("Mátricula Inválida\n");                         
+                    switch (opcaoAluno) {
+                        case 0: {
+                            SairAluno = 1;
+                            break;
                         }
-                            listaAluno[qtd_aluno].matricula = matricula;//Lista de alunos recebe o cadastro da mátricula em um vetor de tamanho qtd_aluno começando em 0
-                            listaAluno[qtd_aluno].ativo = 1;
-                            qtd_aluno++;
-                            printf("Mátriculado com sucesso\n");
-                            }
-                        }
-                        break;
-
-                    case 2: {
-                        printf("Listar Aluno \n");
-                        if (qtd_aluno == 0) {
-                            printf("Lista De Alunos Vazia\n");
-                        } else {    
-                        for(int i=0; i<qtd_aluno; i++)
-                        {
-                            if (listaAluno[i].ativo == 1)
-                            printf("Mátricula: %d\n", listaAluno[i].matricula);
-                            }
-                        }
-                        break;
-                    }
-                    
-                    case 3: {
-                        printf("Atualizar Aluno \n");
-                        break;
-                    }
-                    case 4: {
-                        printf("Excluir Aluno \n");
-                        printf("Digite a mátricula: \n");
-                        scanf("%d", &matricula);
-                        int achou = 0;
-                        if (matricula < 0) {
-                            printf("Mátricula Inválida \n");
+                        case 1: {
+                            printf("Cadastrar Aluno \n");
+                            if (qtd_aluno == TAM_ALUNO) {
+                                printf("Lista de alunos cheia \n");
                             } else {
-                                for(int i=0; i < qtd_aluno; i++) 
-                                { 
-                                    if (matricula == listaAluno[i].matricula) {
-                                    // exclusão lógica
-                                    listaAluno[i].ativo = -1;
-                                    for(int j=i; j<qtd_aluno - 1; j++) { // shift: move alunos da frente para uma casa anterior
-                                        listaAluno[j].matricula = listaAluno[j+1].matricula; // posição J recebe 
-                                        listaAluno[j].sexo = listaAluno[j+1].sexo;
-                                        listaAluno[j].ativo = listaAluno[j+1].ativo;
-                                    }
-                                    
-                                    qtd_aluno--; //decrementa a quantidade de alunos
-                                    achou = 1;
-                                    break;
+
+                                printf("Digite a mátricula \n");
+                                scanf("%d", &matricula);
+                                if (matricula < 0) {
+                                    printf("Mátricula Inválida\n");
+                                }
+                                listaAluno[qtd_aluno].matricula = matricula;//Lista de alunos recebe o cadastro da mátricula em um vetor de tamanho qtd_aluno começando em 0
+                                listaAluno[qtd_aluno].ativo = 1;
+                                qtd_aluno++;
+                                printf("Mátriculado com sucesso\n");
+                            }
+                            break;
+                        }
+                        case 2: {
+                            printf("Listar Aluno \n");
+                            if (qtd_aluno == 0) {
+                                printf("Lista De Alunos Vazia\n");
+                            } else {
+                                for (int i = 0; i < qtd_aluno; i++)
+                                {
+                                    if (listaAluno[i].ativo == 1)
+                                        printf("Mátricula: %d\n", listaAluno[i].matricula);
+                                }
+                            }
+                            break;
+                        }
+
+                        case 3: {
+                            printf("Atualizar Aluno \n");
+                            printf("Digite a mátricula: \n");
+                            scanf("%d", &matricula);
+                            int achou = 0;
+                            int novamatricula;
+                            if (matricula < 0) {
+                                printf("Mátricula Inválida \n");
+                            } else {
+                                for (int i = 0; i < qtd_aluno; i++)
+                                {
+                                    if (matricula == listaAluno[i].matricula && listaAluno[i].ativo) {
+                                        // atualizacao
+                                        printf("Digite a nova mátricula: \n")
+                                        scanf("%d", &novamatricula)
+                                        // resolver questão de mátricula negativa
+
+                                            listaAluno[i].matricula = novamatricula; 
+                                        }
+                                        achou = 1;
+                                        break;
                                     }
                                 }
                                 if (achou)
                                     printf("Aluno excluido com sucesso \n");
-                                else   
+                                else
                                     printf("Mátricula inexistente \n");
                             }
+                            break;
+
                         }
-                        break;
-                    default: {
-                        printf("Opção Inválida \n");
+                        case 4: {
+                            printf("Excluir Aluno \n");
+                            printf("Digite a mátricula: \n");
+                            scanf("%d", &matricula);
+                            int achou = 0;
+                            if (matricula < 0) {
+                                printf("Mátricula Inválida \n");
+                            } else {
+                                for (int i = 0; i < qtd_aluno; i++)
+                                {
+                                    if (matricula == listaAluno[i].matricula) {
+                                        // exclusão lógica
+                                        listaAluno[i].ativo = -1;
+                                        for (int j = i; j < qtd_aluno - 1; j++) { // shift: move alunos da frente para uma casa anterior
+                                            listaAluno[j].matricula = listaAluno[j+1].matricula; // posição J recebe
+                                            listaAluno[j].sexo = listaAluno[j+1].sexo;
+                                            listaAluno[j].ativo = listaAluno[j+1].ativo;
+                                        }
+
+                                        qtd_aluno--; //decrementa a quantidade de alunos
+                                        achou = 1;
+                                        break;
+                                    }
+                                }
+                                if (achou)
+                                    printf("Aluno excluido com sucesso \n");
+                                else
+                                    printf("Mátricula inexistente \n");
+                            }
+                            break;
+                        }
+                        default: {
+                            printf("Opção Inválida \n");
+                        }
                     }
                 }
-                }
-
-
-
-
-
-
-
                 break;
             }
             case 2: {
@@ -140,11 +159,12 @@ int main(void) {
             case 3: {
                 printf("Módulo da Disciplina\n");
                 break;
-            } default: {
+            }
+            default: {
                 printf("Opção Inválida\n");
-                }
             }
         }
-
-        return 0;
     }
+
+    return 0;
+}
