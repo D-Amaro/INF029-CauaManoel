@@ -6,11 +6,32 @@
 #define MATRICULA_INVALIDA -2
 #define LISTA_CHEIA -3
 
+
+// === Estruturas === // 
 typedef struct alu {
     int matricula;
     char sexo;
+    char nome[50];
+    char cpf[15];
+    Data Datanasc;
     int ativo;
 } Aluno;
+
+typedef struct prof {
+    int matricula;
+    char sexo;
+    char nome[50];
+    char cpf[15];
+    Data Datanasc;
+} Professor;
+
+
+typedef struct disc {
+    char nomeDisciplina[50];
+    int codigoDisciplina;
+    int semestre;
+    int matriculaProfessor;
+} Disciplina;
 
 // protótipos
 int menuGeral();
@@ -207,6 +228,7 @@ int atualizarAluno(Aluno listaAluno[], int qtd_aluno){
 
     printf("Atualizar Aluno \n");
     printf("Digite a mátricula: \n");
+    int matricula;
     scanf("%d", &matricula);
     int achou = 0;
     int novamatricula;
