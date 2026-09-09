@@ -121,7 +121,9 @@ int main(void) {
                         }
                         case 1: {
 
+                            int retorno = CadastrarProfessor(listaProfessor, qtd_professor);
 
+                        
 
                             break;
                         }
@@ -188,17 +190,37 @@ int menuProfessor() {
     printf("3 - Atualizar \n");
     printf("4 - Excluir \n");
 
-    scanf("%d"&opcaoProfessor);
+    scanf("%d", &opcaoProfessor);
 
     return opcaoProfessor;
 }
 
-int CadastrarProfessor(Professor listaProfessor[], int )
+int CadastrarProfessor(Professor listaProfessor[], int qtd_professor) {
+
+    printf("\n==========================\n");
+    printf("    Cadastrar Professor\n");
+    printf("\n==========================\n");
+    if (qtd_professor == TAM_PROFESSOR) {
+        return LISTA_CHEIA;
+    } else {
+        printf("Digite a mátricula \n");
+        int matricula;
+        scanf("%d", &matricula);
+        if (matricula < 0) {
+            return MATRICULA_INVALIDA;
+        }
+        listaProfessor[qtd_professor].matricula = matricula; 
+        listaProfessor[qtd_professor].ativo = 1;
+
+            return CAD_PROFESSOR_SUCESSO;
+    }   
 
 int CadastrarAluno(Aluno listaAluno[], int qtd_aluno) {
     // Liberando acesso a lista e qtd
+    printf("\n==========================\n");
+    printf("      Cadastrar Aluno \n");
+     printf("\n==========================\n");
 
-    printf("Cadastrar Aluno \n");
     if (qtd_aluno == TAM_ALUNO) {
         return LISTA_CHEIA;
     } else {
