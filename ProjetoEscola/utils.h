@@ -1,4 +1,6 @@
 #define TAM_ALUNO 3
+#define TAM_PROFESSOR 3
+
 
 #define CAD_ALUNO_SUCESSO -1
 #define MATRICULA_INVALIDA -2

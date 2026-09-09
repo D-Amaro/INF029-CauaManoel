@@ -6,6 +6,7 @@
 // protótipos
 int menuGeral();
 int menuAluno();
+int menuProfessor();
 int CadastrarAluno(Aluno listaAluno[], int qtd_aluno);
 void listarAluno(Aluno listaAluno[], int qtd_aluno);
 int atualizarAluno(Aluno listaAluno[], int qtd_aluno);
@@ -14,8 +15,10 @@ int excluirAluno(Aluno listaAluno[], int qtd_aluno);
 
 int main(void) {
 
+    Professor listaProfessor[TAM_PROFESSOR];
     Aluno listaAluno[TAM_ALUNO];
     int opcao;
+    int qtd_professor = 0;
     int qtd_aluno = 0;
     int matricula = 0;
     int sair = 0; // falso
@@ -100,7 +103,30 @@ int main(void) {
                 break;
             }
             case 2: {
+                printf("\n=======================\n");
                 printf("Módulo do Professor\n");
+                printf("\n=======================\n");
+
+                int SairProfessor = 0;
+                int opcaoProfessor;
+
+                while(!SairProfessor) {
+
+                    opcaoProfessor = menuProfessor();
+                
+                    switch(opcaoProfessor) {
+                        case 0: {
+                            SairProfessor = 1;
+                            break;
+                        }
+                        case 1: {
+
+
+
+                            break;
+                        }
+                    } 
+                }
                 break;
             }
             case 3: {
@@ -117,6 +143,8 @@ int main(void) {
 }
 
 // Funções
+
+
 
 int menuGeral() {
 
@@ -149,6 +177,23 @@ int menuAluno() {
 
     return opcaoAluno;
 }
+
+int menuProfessor() {
+
+    int opcaoProfessor;
+
+    printf("0 - Voltar \n");
+    printf("1 - Cadastrar \n");
+    printf("2 - Listar \n");
+    printf("3 - Atualizar \n");
+    printf("4 - Excluir \n");
+
+    scanf("%d"&opcaoProfessor);
+
+    return opcaoProfessor;
+}
+
+int CadastrarProfessor(Professor listaProfessor[], int )
 
 int CadastrarAluno(Aluno listaAluno[], int qtd_aluno) {
     // Liberando acesso a lista e qtd
