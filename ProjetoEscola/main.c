@@ -1,37 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
-#define TAM_ALUNO 3
-
-#define CAD_ALUNO_SUCESSO -1
-#define MATRICULA_INVALIDA -2
-#define LISTA_CHEIA -3
-
-
-// === Estruturas === // 
-typedef struct alu {
-    int matricula;
-    char sexo;
-    char nome[50];
-    char cpf[15];
-    Data Datanasc;
-    int ativo;
-} Aluno;
-
-typedef struct prof {
-    int matricula;
-    char sexo;
-    char nome[50];
-    char cpf[15];
-    Data Datanasc;
-} Professor;
-
-
-typedef struct disc {
-    char nomeDisciplina[50];
-    int codigoDisciplina;
-    int semestre;
-    int matriculaProfessor;
-} Disciplina;
+#include "estruturas.h"
+#include "utils.h"
 
 // protótipos
 int menuGeral();
@@ -39,6 +9,7 @@ int menuAluno();
 int CadastrarAluno(Aluno listaAluno[], int qtd_aluno);
 void listarAluno(Aluno listaAluno[], int qtd_aluno);
 int atualizarAluno(Aluno listaAluno[], int qtd_aluno);
+int excluirAluno(Aluno listaAluno[], int qtd_aluno);
 
 
 int main(void) {
@@ -94,41 +65,31 @@ int main(void) {
                         }
 
                         case 3: {
-                           
 
-
+                            int retorno = atualizarAluno(listaAluno, qtd_aluno);
+                            if (retorno == MATRICULA_INVALIDA) 
+                                printf("Matrícula inválida\n");
+                            else if (retorno == ATUALIZACAO_ALUNO_SUCESSO) {
+                                printf("Aluno atualizado com sucesso \n");
+                            } else { (retorno == MATRICULA_INEXISTENTE);
+                                printf("Matrícula inexistente\n");   
+                            }
                             break;
+
                         }
                         case 4: {
-                            printf("Excluir Aluno \n");
-                            printf("Digite a mátricula: \n");
-                            scanf("%d", &matricula);
-                            int achou = 0;
+                            
+                            int retorno = excluirAluno(listaAluno, qtd_aluno);
 
-                            if (matricula < 0) {
-                                printf("Mátricula Inválida \n");
-                            } else {
-                                for (int i = 0; i < qtd_aluno; i++)
-                                {
-                                    if (matricula == listaAluno[i].matricula) {
-                                        // exclusão lógica
-                                        listaAluno[i].ativo = -1;
-                                        for (int j = i; j < qtd_aluno - 1; j++) { // shift: move alunos da frente para uma casa anterior
-                                            listaAluno[j].matricula = listaAluno[j + 1].matricula; // posição J recebe
-                                            listaAluno[j].sexo = listaAluno[j + 1].sexo;
-                                            listaAluno[j].ativo = listaAluno[j + 1].ativo;
-                                        }
-
-                                        qtd_aluno--; // decrementa a quantidade de alunos
-                                        achou = 1;
-                                        break;
-                                    }
-                                }
-                                if (achou)
-                                    printf("Aluno excluido com sucesso \n");
-                                else
-                                    printf("Mátricula inexistente \n");
+                            if (retorno == MATRICULA_INVALIDA) 
+                                printf("Matrícula inválida\n");
+                            else if (retorno == EXCLUSAO_SUCESSO) {
+                                printf("Mátricula Excluída com sucesso \n");
+                                qtd_aluno--; // decrementa a quantidade de alunos
+                            } else { (retorno == MATRICULA_INEXISTENTE);
+                                printf("Matrícula inexistente\n");
                             }
+
                             break;
                         }
                         default: {
@@ -234,7 +195,7 @@ int atualizarAluno(Aluno listaAluno[], int qtd_aluno){
     int novamatricula;
 
     if (matricula < 0) {
-        printf("Mátricula Inválida \n");
+        return MATRICULA_INVALIDA;
     } else {
         for (int i = 0; i < qtd_aluno; i++)
         {
@@ -242,6 +203,10 @@ int atualizarAluno(Aluno listaAluno[], int qtd_aluno){
                 // atualizacao
                 printf("Digite a nova mátricula: \n");
                 scanf("%d", &novamatricula);
+               
+                if (matricula < 0) {
+                    return MATRICULA_INVALIDA;
+                }
                 // resolver questão de mátricula negativa
 
                 listaAluno[i].matricula = novamatricula;
@@ -251,9 +216,43 @@ int atualizarAluno(Aluno listaAluno[], int qtd_aluno){
             }
         }
         if (achou)
-            printf("Aluno excluido com sucesso \n");
+            return ATUALIZACAO_ALUNO_SUCESSO;
         else
-            printf("Mátricula inexistente \n");
+            return MATRICULA_INEXISTENTE;
+    }
+
+}
+
+int excluirAluno(Aluno listaAluno[], int qtd_aluno) {
+
+    printf("Excluir Aluno \n");
+    printf("Digite a mátricula: \n");
+    int matricula;
+    scanf("%d", &matricula);
+    int achou = 0;
+
+    if (matricula < 0) {
+        return MATRICULA_INVALIDA;
+    } else {
+        for (int i = 0; i < qtd_aluno; i++)
+        {
+            if (matricula == listaAluno[i].matricula) {
+                // exclusão lógica
+                listaAluno[i].ativo = -1;
+                for (int j = i; j < qtd_aluno - 1; j++) { // shift: move alunos da frente para uma casa anterior
+                    listaAluno[j].matricula = listaAluno[j + 1].matricula; // posição J recebe
+                    listaAluno[j].sexo = listaAluno[j + 1].sexo;
+                    listaAluno[j].ativo = listaAluno[j + 1].ativo;
+                }
+
+                achou = 1;
+                break;
+            }
+        }
+        if (achou)
+            return EXCLUSAO_SUCESSO;
+        else
+            return MATRICULA_INEXISTENTE;
     }
 
 }
