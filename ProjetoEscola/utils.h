@@ -1,5 +1,6 @@
 #define TAM_ALUNO 3
 #define TAM_PROFESSOR 3
+#define TAM_DISCIPLINA 5
 
 
 #define CAD_ALUNO_SUCESSO -1

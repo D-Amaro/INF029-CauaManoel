@@ -7,6 +7,7 @@
 int menuGeral();
 int menuAluno();
 int menuProfessor();
+
 int CadastrarAluno(Aluno listaAluno[], int qtd_aluno);
 void listarAluno(Aluno listaAluno[], int qtd_aluno);
 int atualizarAluno(Aluno listaAluno[], int qtd_aluno);
@@ -17,13 +18,17 @@ void ListarProfessor(Professor listaProfessor[], int qtd_professor);
 int AtualizarProfessor(Professor listaProfessor[],int qtd_professor);
 int ExcluirProfessor(Professor listaProfessor[], int qtd_professor);
 
+int cadastrarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina);
+
 
 int main(void) {
 
     Professor listaProfessor[TAM_PROFESSOR];
     Aluno listaAluno[TAM_ALUNO];
+    Disciplina listaDisciplina[TAM_DISCIPLINA];
     int opcao;
     int qtd_professor = 0;
+    int qtd_disciplina = 0;
     int qtd_aluno = 0;
     int matricula = 0;
     int sair = 0; // falso
@@ -163,9 +168,21 @@ int main(void) {
 
                             int retorno = ExcluirProfessor(listaProfessor, qtd_professor);
 
-
+                            if (retorno == MATRICULA_INVALIDA) {
+                                printf("Mátricula Invalida \n");
+                            } else if (retorno == EXCLUSAO_SUCESSO) {
+                                printf("Professor Excluido com sucesso \n");
+                                qtd_professor--;
+                            } else { (retorno == MATRICULA_INEXISTENTE)
+                                printf("Mátricula Inexistente \n");
+                            }  
+                            break;
                         }
-                    } 
+
+                        default: {
+                            printf("Opção Inválida \n");
+                        }
+                    }
                 }
                 break;
             }
@@ -242,13 +259,29 @@ int ExcluirProfessor(Professor listaProfessor[], int qtd_professor) {
     printf("Informe a matrícula para ser excluida: \n");
     scanf("%d", &matricula);
 
-    if (matricula < 0 )
+    if (matricula < 0 ) {
         return MATRICULA_INVALIDA;
-    
-    
+    } else {
+        for ( i = 0; i < qtd_professor; i++) 
+        {
+            if (matricula == listaProfessor[i].matricula) {
 
+            listaProfessor[i].ativo = -1; // desativação lógica
 
-
+                for (j = i; j < qtd_professor - 1; j++) { // shift para ajustar o vetor
+                    listaProfessor[j].matricula = listaProfessor[j+1].matricula;
+                    listaProfessor[j].sexo = listaProfessor[j+1].matricula;
+                    listaProfessor[j].ativo = listaProfessor[j+1].ativo;
+                }
+                achou = 1;
+                break;
+            }
+        }    
+            if(achou)
+                return EXCLUSAO_SUCESSO;
+            else 
+                return MATRICULA_INEXISTENTE;
+    }
 }
 
 
