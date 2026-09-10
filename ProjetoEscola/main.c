@@ -3,7 +3,7 @@
 #include "estruturas.h"
 #include "utils.h"
 
-// protótipos
+// ================ PROTÓTIPOS ==============//
 int menuGeral();
 int menuAluno();
 int menuProfessor();
@@ -11,6 +11,11 @@ int CadastrarAluno(Aluno listaAluno[], int qtd_aluno);
 void listarAluno(Aluno listaAluno[], int qtd_aluno);
 int atualizarAluno(Aluno listaAluno[], int qtd_aluno);
 int excluirAluno(Aluno listaAluno[], int qtd_aluno);
+
+int CadastrarProfessor(Professor listaProfessor[], int qtd_professor);
+void ListarProfessor(Professor listaProfessor[], int qtd_professor);
+int AtualizarProfessor(Professor listaProfessor[],int qtd_professor);
+int ExcluirProfessor(Professor listaProfessor[], int qtd_professor);
 
 
 int main(void) {
@@ -123,9 +128,42 @@ int main(void) {
 
                             int retorno = CadastrarProfessor(listaProfessor, qtd_professor);
 
-                        
-
+                            if (retorno == LISTA_CHEIA) 
+                                printf("Limite máximo de professores cadastrados \n");
+                            else if (retorno == MATRICULA_INVALIDA) { 
+                                printf("Mátricula inválida \n");
+                            } else { 
+                                printf("Professor matrículo com sucesso \n");
+                                qtd_professor++;
+                            }
                             break;
+                        }
+                        case 2: {
+
+                            ListarProfessor(listaProfessor, qtd_professor);
+                            
+                            break;
+
+                        }
+                        case 3: {
+
+                            int retorno = AtualizarProfessor(listaProfessor, qtd_professor);
+
+                            if (retorno == MATRICULA_INVALIDA) 
+                                printf("Matrícula de professor inválida \n")
+                            else if (retorno == ATUALIZACAO_PROFESSOR_SUCESSO) {
+                                printf("Atualizada com sucesso \n ");
+                            } else { (retorno == MATRICULA_INEXISTENTE) 
+                                printf("Matrícula Inexistente \n");
+                            }
+                            break;
+
+                        }
+                        case 4: {
+
+                            int retorno = ExcluirProfessor(listaProfessor, qtd_professor);
+
+
                         }
                     } 
                 }
@@ -195,6 +233,76 @@ int menuProfessor() {
     return opcaoProfessor;
 }
 
+int ExcluirProfessor(Professor listaProfessor[], int qtd_professor) {
+
+    int matricula;
+    int achou = 0;
+
+    printf("Excluir Professor \n");
+    printf("Informe a matrícula para ser excluida: \n");
+    scanf("%d", &matricula);
+
+    if (matricula < 0 )
+        return MATRICULA_INVALIDA;
+    
+    
+
+
+
+}
+
+
+int AtualizarProfessor (Professor listaProfessor[], int qtd_professor) {
+
+    int achou = 0;
+    int novamatricula;
+
+    printf("Atualizar Professor \n");
+
+    printf("Informe a mátricula atual: \n");
+    int matricula;
+    scanf("%d", &matricula);
+    if ( matricula < 0) {
+        return MATRICULA_INVALIDA;
+    } else {
+        for (i = 0; i < qtd_professor; i++) 
+            {
+            if (matricula == listaProfessor[i].matricula && listaProfessor[i].ativo) {
+                printf("Digite a nova matrícula: \n ");
+                int novamatricula;
+                scanf("%d", &novamatricula);
+
+                if ( matricula < 0) {
+                    return MATRICULA_INVALIDA;
+                }
+
+                listaProfessor[i].matricula = novamatricula;
+
+                achou = 1;
+                break;
+            }
+        }
+            if (achou)
+                    return ATUALIZACAO_PROFESSOR_SUCESSO;
+            else 
+                    return MATRICULA_INEXISTENTE;
+    } 
+}
+
+void ListarProfessor(Professor listaProfessor[], int qtd_professor) {
+
+    printf("Listar Professores \n");
+    if (qtd_professor == 0);
+        printf("Lista de profesores vazia \n");
+    else { 
+        for ( i = 0; i < qtd_professor; i++)
+        { 
+            if ( listaProfessor[i].ativo == 1)
+                printf("Mátricula: %d \n", &ListarProfessor[i].matricula);
+        }
+    }
+}
+
 int CadastrarProfessor(Professor listaProfessor[], int qtd_professor) {
 
     printf("\n==========================\n");
@@ -214,7 +322,7 @@ int CadastrarProfessor(Professor listaProfessor[], int qtd_professor) {
 
             return CAD_PROFESSOR_SUCESSO;
     }   
-
+}
 int CadastrarAluno(Aluno listaAluno[], int qtd_aluno) {
     // Liberando acesso a lista e qtd
     printf("\n==========================\n");
@@ -251,6 +359,8 @@ void listarAluno(Aluno listaAluno[], int qtd_aluno) {
         }
     }
 }
+
+
 
 int atualizarAluno(Aluno listaAluno[], int qtd_aluno){
 
