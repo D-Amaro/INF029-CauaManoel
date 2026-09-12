@@ -331,7 +331,7 @@ void ListarProfessor(Professor listaProfessor[], int qtd_professor) {
         for ( int i = 0; i < qtd_professor; i++)
         { 
             if ( listaProfessor[i].ativo == 1)
-                printf("Mátricula: %d \n", &ListaProfessor[i].matricula);
+                printf("Mátricula: %d \n", &listaProfessor[i].matricula);
         }
     }
 }
