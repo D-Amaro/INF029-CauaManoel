@@ -201,7 +201,7 @@ int main(void) {
                     
                     opcaoDisciplina = menuDisciplina();
 
-                switch(opcaoProfessor) {
+                switch(opcaoDisciplina) {
 
                     case 0: {
                     SairDisciplina = 1;
@@ -259,9 +259,15 @@ int cadastrarDisciplina(Disciplina listaDisciplina(), int qtd_disciplina) {
 
 }
 
-void listarDisciplina(Disciplina listaDisciplina(), int qtd_disciplina)
-int atualizarDisciplina(Disciplina listaDisciplina(), int qtd_disciplina)
-int excluirDisciplina(Disciplina listaDisciplina(), int qtd_disciplina)
+void listarDisciplina(Disciplina listaDisciplina(), int qtd_disciplina){
+
+}
+int atualizarDisciplina(Disciplina listaDisciplina(), int qtd_disciplina) {
+
+}
+int excluirDisciplina(Disciplina listaDisciplina(), int qtd_disciplina){
+    
+}
 
 int menuDisciplina() {
 
