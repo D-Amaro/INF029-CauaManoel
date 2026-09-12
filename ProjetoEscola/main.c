@@ -3,7 +3,7 @@
 #include "estruturas.h"
 #include "utils.h"
 
-// ================ PROTÓTIPOS ==============//
+// ================ PROTÓTIPOS ============== //
 int menuGeral();
 int menuAluno();
 int menuProfessor();
@@ -19,6 +19,9 @@ int AtualizarProfessor(Professor listaProfessor[],int qtd_professor);
 int ExcluirProfessor(Professor listaProfessor[], int qtd_professor);
 
 int cadastrarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina);
+void listarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina);
+int atualizarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina);
+int excluirDisciplina(Disciplina listaDisciplina[], int qtd_disciplina);
 
 
 int main(void) {
@@ -187,7 +190,36 @@ int main(void) {
                 break;
             }
             case 3: {
+                printf("\n=======================\n");
                 printf("Módulo da Disciplina\n");
+                printf("\n=======================\n");
+
+                int = opcaoDisciplina;
+                int = SairDisciplina = 0;
+
+                while(!SairDisciplina) {
+                    
+                    opcaoDisciplina = menuDisciplina();
+
+                switch(opcaoProfessor) {
+
+                    case 0: {
+                    SairDisciplina = 1;
+                    break;
+                    }
+
+                    case 1: {
+
+
+                    }
+
+
+
+
+                }
+                }
+                    
+
                 break;
             }
             default: {
@@ -202,6 +234,54 @@ int main(void) {
 // Funções
 
 
+
+int cadastrarDisciplina(Disciplina listaDisciplina(), int qtd_disciplina) {
+
+    printf("\n==========================\n");
+    printf("    Cadastrar Disciplina\n");
+    printf("\n==========================\n");
+    if (qtd_disciplina == TAM_DISCIPLINA) {
+        return LISTA_CHEIA;
+    } else {
+        printf("Digite o código da discplina: \n");
+        int codigoDisciplina;
+        scanf("%d", codigoDisciplina);
+
+        if (codigoDisciplina < 0) {
+            return MATRICULA_INVALIDA;
+        }
+
+        listaDisciplina[qtd_disciplina].codigoDisciplina = codigoDisciplina;
+        listaDisciplina[qtd_disciplina].ativo = 1;
+
+        return COD_DISCIPLINA_SUCESSO;
+
+
+}
+
+void listarDisciplina(Disciplina listaDisciplina(), int qtd_disciplina)
+int atualizarDisciplina(Disciplina listaDisciplina(), int qtd_disciplina)
+int excluirDisciplina(Disciplina listaDisciplina(), int qtd_disciplina)
+
+int menuDisciplina() {
+
+    int opcaoProfessor;
+
+    printf("====================\n");
+    printf("Projeto Escola\n");
+    printf("====================\n");
+
+    printf("0 - Voltar \n");
+    printf("1 - Cadastrar Disciplina \n");
+    printf("2 - Listar Disciplina\n");
+    printf("3 - Atualizar Disciplina \n");
+    printf("4 - Excluir Disciplina \n");
+
+    scanf("%d", opcaoDisciplina);
+
+    return opcaoDisciplina;
+
+}
 
 int menuGeral() {
 
@@ -356,6 +436,7 @@ int CadastrarProfessor(Professor listaProfessor[], int qtd_professor) {
             return CAD_PROFESSOR_SUCESSO;
     }   
 }
+
 int CadastrarAluno(Aluno listaAluno[], int qtd_aluno) {
     // Liberando acesso a lista e qtd
     printf("\n==========================\n");
@@ -365,9 +446,42 @@ int CadastrarAluno(Aluno listaAluno[], int qtd_aluno) {
     if (qtd_aluno == TAM_ALUNO) {
         return LISTA_CHEIA;
     } else {
+        printf("Digite o nome do aluno: \n");
+        fgets(listaAluno[qtd_aluno].nome, 50, stdin);
+
+        size_t ln = strlen(listaAluno[qtd_aluno].nome) - 1;
+        if( listaAluno[qtd_aluno].nome[ln] == '\n')
+            listaAluno[qtd_aluno].nmome[ln] = '\0';
+
+        printf("Digite o sexo: \n");
+        scanf("%c", &listaAluno[qtd_aluno].sexo);
+
+        listaAluno[qtd_aluno].sexo = toupper(listaAluno[qtd_aluno].sexo);
+        if (listaAluno[qtd_aluno].sexo != 'M' && listaAluno[qtd_aluno].sexo != 'F')
+        {
+            return SEXO_INVALIDO;
+        }
+
+        printf("Digite o dia de nascimento: \n");
+        scanf("%d", &listaAluno[qtd_aluno].DataNascimento.dia);
+
+        printf("Digite o dia de nascimento: \n");
+        scanf("%d", &listaAluno[qtd_aluno].DataNascimento.mes);
+
+        printf("Digite o dia de nascimento: \n");
+        scanf("%d", &listaAluno[qtd_aluno].DataNascimento.ano);
+        getchar();
+
+        printf("Digite o CPF: \n");
+        fgets(listaAluno[qtd_aluno].cpf, 15, stdin);
+
+        ln = strlen(listaAluno[qtd_aluno].cpf) - 1;
+        if (listaAluno[qtd_aluno].cpf[ln] == '\n')
+            listaAluno[qtd_aluno].cpf[ln] = '\0';
+
         printf("Digite a mátricula \n");
         int matricula;
-        scanf("%d", &matricula);
+        scanf("%d", &listaAluno[qtd_aluno].matricula);
         if (matricula < 0) {
             return MATRICULA_INVALIDA;
         }
