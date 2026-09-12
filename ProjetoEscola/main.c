@@ -158,7 +158,7 @@ int main(void) {
                                 printf("Matrícula de professor inválida \n");
                             else if (retorno == ATUALIZACAO_PROFESSOR_SUCESSO) {
                                 printf("Atualizada com sucesso \n ");
-                            } else { (retorno == MATRICULA_INEXISTENTE) 
+                            } else { (retorno == MATRICULA_INEXISTENTE);
                                 printf("Matrícula Inexistente \n");
                             }
                             break;
@@ -173,7 +173,7 @@ int main(void) {
                             } else if (retorno == EXCLUSAO_SUCESSO) {
                                 printf("Professor Excluido com sucesso \n");
                                 qtd_professor--;
-                            } else { (retorno == MATRICULA_INEXISTENTE)
+                            } else { (retorno == MATRICULA_INEXISTENTE);
                                 printf("Mátricula Inexistente \n");
                             }  
                             break;
@@ -325,13 +325,13 @@ int AtualizarProfessor (Professor listaProfessor[], int qtd_professor) {
 void ListarProfessor(Professor listaProfessor[], int qtd_professor) {
 
     printf("Listar Professores \n");
-    if (qtd_professor == 0);
+    if (qtd_professor == 0) {
         printf("Lista de profesores vazia \n");
-    else { 
+    } else { 
         for ( int i = 0; i < qtd_professor; i++)
         { 
             if ( listaProfessor[i].ativo == 1)
-                printf("Mátricula: %d \n", &ListarProfessor[i].matricula);
+                printf("Mátricula: %d \n", &ListaProfessor[i].matricula);
         }
     }
 }
