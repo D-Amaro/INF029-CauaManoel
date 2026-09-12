@@ -46,7 +46,7 @@ int main(void) {
                 printf("Módulo do Aluno\n");
                 int SairAluno = 0;
                 int opcaoAluno;
-                while (!SairAluno) {
+                while(!SairAluno){
 
                     opcaoAluno = menuAluno();
 
@@ -155,7 +155,7 @@ int main(void) {
                             int retorno = AtualizarProfessor(listaProfessor, qtd_professor);
 
                             if (retorno == MATRICULA_INVALIDA) 
-                                printf("Matrícula de professor inválida \n")
+                                printf("Matrícula de professor inválida \n");
                             else if (retorno == ATUALIZACAO_PROFESSOR_SUCESSO) {
                                 printf("Atualizada com sucesso \n ");
                             } else { (retorno == MATRICULA_INEXISTENTE) 
@@ -262,13 +262,13 @@ int ExcluirProfessor(Professor listaProfessor[], int qtd_professor) {
     if (matricula < 0 ) {
         return MATRICULA_INVALIDA;
     } else {
-        for ( i = 0; i < qtd_professor; i++) 
+        for (int i = 0; i < qtd_professor; i++) 
         {
             if (matricula == listaProfessor[i].matricula) {
 
             listaProfessor[i].ativo = -1; // desativação lógica
 
-                for (j = i; j < qtd_professor - 1; j++) { // shift para ajustar o vetor
+                for (int j = i; j < qtd_professor - 1; j++) { // shift para ajustar o vetor
                     listaProfessor[j].matricula = listaProfessor[j+1].matricula;
                     listaProfessor[j].sexo = listaProfessor[j+1].matricula;
                     listaProfessor[j].ativo = listaProfessor[j+1].ativo;
@@ -298,7 +298,7 @@ int AtualizarProfessor (Professor listaProfessor[], int qtd_professor) {
     if ( matricula < 0) {
         return MATRICULA_INVALIDA;
     } else {
-        for (i = 0; i < qtd_professor; i++) 
+        for (int i = 0; i < qtd_professor; i++) 
             {
             if (matricula == listaProfessor[i].matricula && listaProfessor[i].ativo) {
                 printf("Digite a nova matrícula: \n ");
@@ -328,7 +328,7 @@ void ListarProfessor(Professor listaProfessor[], int qtd_professor) {
     if (qtd_professor == 0);
         printf("Lista de profesores vazia \n");
     else { 
-        for ( i = 0; i < qtd_professor; i++)
+        for ( int i = 0; i < qtd_professor; i++)
         { 
             if ( listaProfessor[i].ativo == 1)
                 printf("Mátricula: %d \n", &ListarProfessor[i].matricula);
