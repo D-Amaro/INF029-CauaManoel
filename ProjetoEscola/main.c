@@ -430,6 +430,41 @@ int CadastrarProfessor(Professor listaProfessor[], int qtd_professor) {
     if (qtd_professor == TAM_PROFESSOR) {
         return LISTA_CHEIA;
     } else {
+
+        printf("Digite o nome do professor: \n");
+        fgets(listaProfessor[qtd_professor].nome,50,stdin);
+
+        size_t ln = strlen(listaProfessor[qtd_professor].nome) - 1;
+
+        if(listaProfessor[qtd_professor].nome.[ln] == '\n')
+            listaProfessor[qtd_professor].nome.[ln] = '\0';
+
+        printf("Digite o sexo: \n");
+        scanf("%c", &listaProfessor[qtd_professor].sexo);
+    
+        listaProfessor[qtd_professor].sexo = toupper(listaProfessor[qtd_professor].sexo);
+        if (listaProfessor[qtd_professor].sexo != 'M' && listaProfessor[qtd_professor].sexo != 'F')
+        {
+            return SEXO_INVALIDO;
+        }
+
+        printf("Digite o dia de nascimento: \n");
+        scanf("%d", &listaProfessor[qtd_professor].DataNascimento.dia);
+
+        printf("Digite o mês de nascimento: \n");
+        scanf("%d", &listaProfessor[qtd_professor].DataNascimento.mes);
+
+        printf("Digite o ano de nascimento: \n");
+        scanf("%d", &listaProfessor[qtd_professor].DataNascimento.ano);
+        getchar();
+
+        printf("Digite o CPF: \n");
+        fgets(listaProfessor[qtd_professor].cpf, 15, stdin);
+
+        ln = strlen(listaProfessor[qtd_professor].cpf) - 1;
+            if(listaProfessor[qtd_professor].cpf.[ln] == '\n')
+                listaProfessor[qtd_professor].cpf.[ln] = '\0';
+
         printf("Digite a mátricula \n");
         int matricula;
         scanf("%d", &matricula);
@@ -457,7 +492,7 @@ int CadastrarAluno(Aluno listaAluno[], int qtd_aluno) {
 
         size_t ln = strlen(listaAluno[qtd_aluno].nome) - 1;
         if( listaAluno[qtd_aluno].nome[ln] == '\n')
-            listaAluno[qtd_aluno].nmome[ln] = '\0';
+            listaAluno[qtd_aluno].nome[ln] = '\0';
 
         printf("Digite o sexo: \n");
         scanf("%c", &listaAluno[qtd_aluno].sexo);
