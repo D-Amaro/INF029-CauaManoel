@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "estruturas.h"
-#include "utils.h"
+#include "defines.h"
 
 // ================ PROTÓTIPOS ============== //
 int menuGeral();
@@ -271,7 +271,7 @@ int excluirDisciplina(Disciplina listaDisciplina(), int qtd_disciplina){
 
 int menuDisciplina() {
 
-    int opcaoProfessor;
+    int opcaoDisciplina;
 
     printf("====================\n");
     printf("Projeto Escola\n");
@@ -436,8 +436,8 @@ int CadastrarProfessor(Professor listaProfessor[], int qtd_professor) {
 
         size_t ln = strlen(listaProfessor[qtd_professor].nome) - 1;
 
-        if(listaProfessor[qtd_professor].nome.[ln] == '\n')
-            listaProfessor[qtd_professor].nome.[ln] = '\0';
+        if(listaProfessor[qtd_professor].nome[ln] == '\n')
+            listaProfessor[qtd_professor].nome[ln] = '\0';
 
         printf("Digite o sexo: \n");
         scanf("%c", &listaProfessor[qtd_professor].sexo);
@@ -462,8 +462,8 @@ int CadastrarProfessor(Professor listaProfessor[], int qtd_professor) {
         fgets(listaProfessor[qtd_professor].cpf, 15, stdin);
 
         ln = strlen(listaProfessor[qtd_professor].cpf) - 1;
-            if(listaProfessor[qtd_professor].cpf.[ln] == '\n')
-                listaProfessor[qtd_professor].cpf.[ln] = '\0';
+            if(listaProfessor[qtd_professor].cpf[ln] == '\n')
+                listaProfessor[qtd_professor].cpf[ln] = '\0';
 
         printf("Digite a mátricula \n");
         int matricula;

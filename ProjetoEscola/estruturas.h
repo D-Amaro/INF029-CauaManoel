@@ -28,6 +28,7 @@ typedef struct disc {
 
 typedef struct data {
 
+    char dataCompleta[11];
     int dia;
     int mes;
     int ano;
