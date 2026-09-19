@@ -1,4 +1,16 @@
+#ifndef ESTRUTURAS_H
+#define ESTRUTURAS_H
+
 // == Estruturas == //
+
+typedef struct data {
+
+    char dataCompleta[11];
+    int dia;
+    int mes;
+    int ano;
+
+} DataNascimento;
 
 typedef struct alu {
     int matricula;
@@ -24,15 +36,8 @@ typedef struct disc {
     int codigoDisciplina;
     int semestre;
     int matriculaProfessor;
+    int ativo;
 } Disciplina;
 
-typedef struct data {
-
-    char dataCompleta[11];
-    int dia;
-    int mes;
-    int ano;
-
-} DataNascimento;
 
 #endif

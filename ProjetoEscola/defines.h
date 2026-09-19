@@ -1,3 +1,6 @@
+#ifndef DEFINES_H
+#define DEFINES_H
+
 #define TAM_ALUNO 3
 #define TAM_PROFESSOR 3
 #define TAM_DISCIPLINA 5
