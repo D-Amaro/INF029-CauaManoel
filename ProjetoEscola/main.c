@@ -409,7 +409,9 @@ int ExcluirProfessor(Professor listaProfessor[], int qtd_professor) {
     int matricula;
     int achou = 0;
 
+    printf("========================\n");
     printf("Excluir Professor \n");
+    printf("========================\n");
     printf("Informe a matrícula para ser excluida: \n");
     scanf("%d", &matricula);
     limparBuffer();
@@ -425,7 +427,10 @@ int ExcluirProfessor(Professor listaProfessor[], int qtd_professor) {
 
                 for (int j = i; j < qtd_professor - 1; j++) { // shift para ajustar o vetor
                     listaProfessor[j].matricula = listaProfessor[j+1].matricula;
+                    strcpy(listaProfessor[j].nome,listaProfessor[j+1].nome);
+                    strcpy(listaProfessor[j].cpf = listaProfessor[j+1].cpf);
                     listaProfessor[j].sexo = listaProfessor[j+1].sexo;
+                    listaProfessor[j].DataNascimento = listaProfessor[j+1].DataNascimento;
                     listaProfessor[j].ativo = listaProfessor[j+1].ativo;
                 }
                 achou = 1;
@@ -557,7 +562,7 @@ int CadastrarProfessor(Professor listaProfessor[], int qtd_professor) {
         removerQuebraLinha(listaProfessor[qtd_professor].cpf);
 
         validarcpf  = cpfvalido(listaProfessor[qtd_professor].cpf);
-        
+
         if (!validarcpf)
            printf("CPF Inválido. Digite apenas os 11 números. \n");
     } while (!validarcpf);
@@ -622,7 +627,7 @@ int CadastrarAluno(Aluno listaAluno[], int qtd_aluno) {
         );
 
         if(!datavalida)
-            printf("Data Inválida! Por favor, digite novamente. \n")
+            printf("Data Inválida! Por favor, digite novamente. \n");
     } while (!datavalida);
 
     int validarcpf;
@@ -719,9 +724,12 @@ int excluirAluno(Aluno listaAluno[], int qtd_aluno) {
                 // exclusão lógica
                 listaAluno[i].ativo = -1;
                 for (int j = i; j < qtd_aluno - 1; j++) { // shift: move alunos da frente para uma casa anterior
-                    listaAluno[j].matricula = listaAluno[j + 1].matricula; // posição J recebe
-                    listaAluno[j].sexo = listaAluno[j + 1].sexo;
-                    listaAluno[j].ativo = listaAluno[j + 1].ativo;
+                    listaAluno[j].matricula = listaAluno[j+1].matricula;
+                    strcpy(listaAluno[j].nome,listaAluno[j+1].nome);
+                    strcpy(listaAluno[j].cpf, listaAluno[j+1].cpf);
+                    listaAluno[j].sexo = listaAluno[j+1].sexo;
+                    listaAluno[j].DataNascimento = listaAluno[j+1].DataNascimento;
+                    listaAluno[j].ativo = listaAluno[j+1].ativo;
                 }
 
                 achou = 1;
