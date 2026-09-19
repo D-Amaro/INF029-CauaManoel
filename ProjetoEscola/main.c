@@ -9,6 +9,7 @@
 int menuGeral();
 int menuAluno();
 int menuProfessor();
+int menuDisciplina();
 void limparBuffer(void);
 
 int CadastrarAluno(Aluno listaAluno[], int qtd_aluno);
@@ -247,39 +248,6 @@ void removerQuebraLinha(char s[]) {
         s[ln - 1] = '\0';
 }
 
-int cadastrarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina) {
-
-    printf("\n==========================\n");
-    printf("    Cadastrar Disciplina\n");
-    printf("\n==========================\n");
-    if (qtd_disciplina == TAM_DISCIPLINA) {
-        return LISTA_CHEIA;
-    } else {
-        printf("Digite o código da discplina: \n");
-        int codigoDisciplina;
-        scanf("%d", &codigoDisciplina);
-
-        if (codigoDisciplina < 0) {
-            return MATRICULA_INVALIDA;
-        }
-
-        listaDisciplina[qtd_disciplina].codigoDisciplina = codigoDisciplina;
-        listaDisciplina[qtd_disciplina].ativo = 1;
-
-        return COD_DISCIPLINA_SUCESSO;
-
-    }
-}
-
-void listarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina){
-
-}
-void atualizarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina) {
-
-}
-void excluirDisciplina(Disciplina listaDisciplina[], int qtd_disciplina){
-    
-}
 
 int menuDisciplina() {
 
@@ -351,6 +319,42 @@ int menuProfessor() {
 
     return opcaoProfessor;
 }
+
+int cadastrarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina) {
+
+    printf("\n==========================\n");
+    printf("    Cadastrar Disciplina\n");
+    printf("\n==========================\n");
+    if (qtd_disciplina == TAM_DISCIPLINA) {
+        return LISTA_CHEIA;
+    } else {
+        printf("Digite o código da discplina: \n");
+        int codigoDisciplina;
+        scanf("%d", &codigoDisciplina);
+
+        if (codigoDisciplina < 0) {
+            return MATRICULA_INVALIDA;
+        }
+
+        listaDisciplina[qtd_disciplina].codigoDisciplina = codigoDisciplina;
+        listaDisciplina[qtd_disciplina].ativo = 1;
+
+        return COD_DISCIPLINA_SUCESSO;
+
+    }
+}
+
+void listarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina){
+
+}
+void atualizarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina) {
+
+}
+void excluirDisciplina(Disciplina listaDisciplina[], int qtd_disciplina){
+    
+}
+
+
 
 int ExcluirProfessor(Professor listaProfessor[], int qtd_professor) {
 
