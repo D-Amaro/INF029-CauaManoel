@@ -10,6 +10,8 @@ int menuGeral();
 int menuAluno();
 int menuProfessor();
 int menuDisciplina();
+int MenuListagem();
+
 void limparBuffer(void);
 void removerQuebraLinha(char s[]);
 int cpfvalido(char cpf[]);
@@ -17,6 +19,10 @@ int valida_data_numeros(int dia, int mes, int ano);
 
 int CadastrarAluno(Aluno listaAluno[], int qtd_aluno);
 void listarAluno(Aluno listaAluno[], int qtd_aluno);
+void listarAlunoSexo(Aluno listaAluno[], int qtd_aluno);
+void listarAlunoAlfabetica (Aluno listaAluno[], int qtd_aluno);
+void listarAlunoData(Aluno listaAluno[], int qtd_aluno);
+
 int atualizarAluno(Aluno listaAluno[], int qtd_aluno);
 int excluirAluno(Aluno listaAluno[], int qtd_aluno);
 
@@ -88,12 +94,12 @@ int main(void) {
                         case 2: {
                             
                             int sairLista = 0;
-                            int listaOpcao;
+                            int opcaoLista;
 
                             while(!sairLista) {
                                  opcaoLista = MenuListagem();
 
-                                 switch(listaOpcao) {
+                                 switch(opcaoLista) {
                                     case 0: {
                                         sairLista = 1;
                                         break;
@@ -105,19 +111,26 @@ int main(void) {
                                     }
                                     case 2: {
 
-                                        
+                                        listarAlunoSexo(listaAluno, qtd_aluno);
+                                        break;
                                     }
-                                 }
-                            }
-                           
+                                    case 3: {
 
-                            break;
-                        }
+                                        listarAlunoAlfabetica(listaAluno, qtd_aluno);
+                                        break;
+                                    }
+                                    case 4: {
 
+                                        listarAlunoData(listaAluno, qtd_aluno);
+                                        break;
+                                    }
                         default: {
                             printf("Opção Inválida. \n");
                         }
-
+                    }
+                }
+                break;
+            }
                         case 3: {
 
                             int retorno = atualizarAluno(listaAluno, qtd_aluno);
@@ -700,11 +713,89 @@ void listarAluno(Aluno listaAluno[], int qtd_aluno) {
             listaAluno[i].DataNascimento.dia,
             listaAluno[i].DataNascimento.mes,
             listaAluno[i].DataNascimento.ano);
-                printf("CPF: %s", listaAluno[i].cpf);
+                printf("CPF: %s\n", listaAluno[i].cpf);
                 printf("--------------------------------------\n");
             }
         }
     }
+}
+
+void listarAlunoSexo(Aluno listaAluno[], int qtd_aluno) {
+
+    printf("=========================\n");
+    printf("  Listagem por Sexo \n");
+    printf("=========================\n");
+    if (qtd_aluno == 0) {
+        printf("Lista de alunos vazia.\n");
+        return;
+    }
+
+        char sexovalido;
+        do {
+            printf("Informe o sexo a ser listado ( M / F ): \n");
+            scanf(" %c",&sexovalido);
+            limparBuffer();
+
+        sexovalido = toupper(sexovalido);
+        if (sexovalido != 'M' && sexovalido != 'F')
+            printf("Sexo inválido! Digite M ou F \n")
+
+        } while(sexovalido != 'M' && sexovalido != 'F');
+
+        for (i = 0; i < qtd_aluno; i++) {
+            if (listaAluno[i].ativo == 1 && listaAluno[i].sexo == sexovalido) {
+                printf("Mátricula: %d\n", listaAluno[i].matricula);
+                printf("Nome: %s\n", listaAluno[i].nome);
+                printf("Sexo: %c\n", listaAluno[i].sexo);
+                printf("Data de nascimento %d / %d / %d\n",
+            listaAluno[i].DataNascimento.dia,
+            listaAluno[i].DataNascimento.mes,
+            listaAluno[i].DataNascimento.ano);
+                printf("CPF: %s\n", listaAluno[i].cpf);
+                printf("--------------------------------------\n");
+
+        }
+    }
+}
+
+void listarAlunoAlfabetica (Aluno listaAluno[], int qtd_aluno) {
+
+    printf("====================================\n");
+    printf("  Listagem por ordem alfabética \n");
+    printf("====================================\n");
+    if (qtd_aluno == 0) {
+        printf("Lista de alunos vazia.\n");
+        return;
+    }
+
+    for (int i = 0; i < qtd_aluno - 1; i++){
+        for (int j = 0; j < qtd_aluno - 1 - i; j++) {
+            if (strcmp(listaAluno[j].nome, listaAluno[j+1].nome) > 0) {
+                Aluno temp = listaAluno[j];
+                listaAluno[j] = listaAluno[j+1];
+                listaAluno[j+1] = temp;
+            }
+        }
+    }
+
+    for(int i = 0; i < qtd_aluno; i++) {
+        if (listaAluno[i].ativo == 1) {
+                printf("Mátricula: %d\n", listaAluno[i].matricula);
+                printf("Nome: %s\n", listaAluno[i].nome);
+                printf("Sexo: %c\n", listaAluno[i].sexo);
+                printf("Data de nascimento %d / %d / %d\n",
+                listaAluno[i].DataNascimento.dia,
+                listaAluno[i].DataNascimento.mes,
+                listaAluno[i].DataNascimento.ano);
+                printf("CPF: %s\n", listaAluno[i].cpf);
+                printf("--------------------------------------\n");
+            }
+        }
+    }
+
+void listarAlunoData(Aluno listaAluno[], int qtd_aluno) {
+
+
 }
 
 int atualizarAluno(Aluno listaAluno[], int qtd_aluno){
