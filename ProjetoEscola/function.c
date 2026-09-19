@@ -1,5 +1,16 @@
 #include <stdio.h>
 
+int compararData(DataNascimento data1, DataNascimento data2) {
+
+    if (d1.ano != d2.ano)
+        return d1.ano > d2.ano;
+
+    if (d1.mes != d2.mes)
+        return d1.mes > d2.mes;
+
+    return d1.dia > d2.dia;
+}
+
 int cpfvalido(char cpf[]) {
     int len = strlen(cpf);
     if (len != 11 ) 

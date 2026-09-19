@@ -16,6 +16,7 @@ void limparBuffer(void);
 void removerQuebraLinha(char s[]);
 int cpfvalido(char cpf[]);
 int valida_data_numeros(int dia, int mes, int ano);
+int compararData(DataNascimento data1, DataNascimento data2);
 
 int CadastrarAluno(Aluno listaAluno[], int qtd_aluno);
 void listarAluno(Aluno listaAluno[], int qtd_aluno);
@@ -795,7 +796,37 @@ void listarAlunoAlfabetica (Aluno listaAluno[], int qtd_aluno) {
 
 void listarAlunoData(Aluno listaAluno[], int qtd_aluno) {
 
+    printf("====================================\n");
+    printf("  Listagem por data de nascimento \n");
+    printf("====================================\n");
+    if (qtd_aluno == 0) {
+        printf("Lista de alunos vazia.\n");
+    return;
+    }
 
+    for(int i = 0; i < qtd_aluno - 1; i++){
+        for(int j = 0; j < qtd_aluno - 1 - i; j++) {
+            if(compararData(listaAluno[j].DataNascimento, listaAluno[j+1].DataNascimento)) {
+            Aluno temp = listaAluno[j];
+                listaAluno[j] = listaAluno[j+1];
+                listaAluno[j+1] = temp;
+            }
+        }
+    }
+
+    for(int i = 0; i < qtd_aluno; i++) {
+        if (listaAluno[i].ativo == 1) {
+                printf("Mátricula: %d\n", listaAluno[i].matricula);
+                printf("Nome: %s\n", listaAluno[i].nome);
+                printf("Sexo: %c\n", listaAluno[i].sexo);
+                printf("Data de nascimento %d / %d / %d\n",
+                listaAluno[i].DataNascimento.dia,
+                listaAluno[i].DataNascimento.mes,
+                listaAluno[i].DataNascimento.ano);
+                printf("CPF: %s\n", listaAluno[i].cpf);
+                printf("--------------------------------------\n");
+            }
+        }
 }
 
 int atualizarAluno(Aluno listaAluno[], int qtd_aluno){
