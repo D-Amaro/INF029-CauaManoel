@@ -1,8 +1,20 @@
 #include <stdio.h>
 
+int cpfvalido(char cpf[]) {
+    int len = strlen(cpf);
+    if (len != 11 ) 
+        return 0;
+    for (i = 0; i < len; i++) {
+        if (cpf[i] < '0' || cpf[i] > '9' )
+        return 0;
+    }
+    return 1;
+
+}
+
 int valida_data_numeros(int dia, int mes, int ano) {
     
-    if (ano <= 0 || mes < 1 || mes > 12 || dia < 1) {
+    if (ano < 1900 || mes < 1 || mes > 12 || dia < 1) {
         return 0;
     }
 
@@ -19,12 +31,13 @@ int valida_data_numeros(int dia, int mes, int ano) {
     return 1; 
 }
 
-int validar_data(char data[]) {
-    int dia, mes, ano;
-    
-    if (sscanf(data, "%d/%d/%d", &dia, &mes, &ano) != 3) {
-        return 0; 
-    
-    return valida_data_numeros(dia, mes, ano);
-    }
+void limparBuffer(void) {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
+void removerQuebraLinha(char s[]) {
+    size_t ln = strlen(s);
+    if (ln > 0 && s[ln - 1] == '\n')
+        s[ln - 1] = '\0';
 }

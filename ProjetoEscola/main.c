@@ -11,6 +11,9 @@ int menuAluno();
 int menuProfessor();
 int menuDisciplina();
 void limparBuffer(void);
+void removerQuebraLinha(char s[]);
+int cpfvalido(char cpf[]);
+int valida_data_numeros(int dia, int mes, int ano);
 
 int CadastrarAluno(Aluno listaAluno[], int qtd_aluno);
 void listarAluno(Aluno listaAluno[], int qtd_aluno);
@@ -50,7 +53,10 @@ int main(void) {
                 break;
             }
             case 1: {
-                printf("Módulo do Aluno\n");
+                printf("===================\n");
+                printf("  Menu do Aluno\n");
+                printf("===================\n");
+
                 int SairAluno = 0;
                 int opcaoAluno;
                 while(!SairAluno){
@@ -78,10 +84,34 @@ int main(void) {
                             break;
                         }
                         case 2: {
+                            
+                            int sairLista = 0;
+                            int listaOpcao;
 
-                            listarAluno(listaAluno, qtd_aluno);
+                            while(!sairLista) {
+                                 opcaoLista = MenuListagem();
+
+                                 switch(listaOpcao) {
+                                    case 0: {
+                                        sairLista = 1;
+                                        break;
+                                    }
+                                    case 1: {
+                                        printf("=========================\n");
+                                        printf("  Listagem convencional\n");
+                                        printf("=========================\n");
+
+                                        listarAluno(listaAluno, qtd_aluno);
+                                    }
+                                 }
+                            }
+                           
 
                             break;
+                        }
+
+                         default: {
+                            printf("Opção Inválida \n");
                         }
 
                         case 3: {
@@ -121,7 +151,7 @@ int main(void) {
             }
             case 2: {
                 printf("\n=======================\n");
-                printf("Módulo do Professor\n");
+                printf("Menu do Professor\n");
                 printf("\n=======================\n");
 
                 int SairProfessor = 0;
@@ -195,7 +225,7 @@ int main(void) {
             }
             case 3: {
                 printf("\n=======================\n");
-                printf("Módulo da Disciplina\n");
+                printf("Menu de Disciplina\n");
                 printf("\n=======================\n");
 
                 int opcaoDisciplina;
@@ -226,6 +256,15 @@ int main(void) {
 
                 break;
             }
+
+            case 4: {
+
+                printf("\n=======================\n");
+                printf("Menu de Relatórios \n");
+                printf("\n=======================\n");
+
+            }
+
             default: {
                 printf("Opção Inválida\n");
             }
@@ -235,19 +274,46 @@ int main(void) {
     return 0;
 }
 
-// Funções
+//============ Funções ============//
 
-void limparBuffer(void) {
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF);
+int menuGeral() {
+
+    int opcao;
+
+    printf("====================\n");
+    printf("  Projeto Escola\n");
+    printf("====================\n");
+    printf("0 - Sair\n");
+    printf("1 - Menu de Aluno\n");
+    printf("2 - Menu de Professor\n");
+    printf("3 - Menu de Disciplina\n");
+    printf("4 - Menu de Relatórios\n");
+
+    scanf("%d", &opcao);
+    limparBuffer();
+
+    return opcao;
 }
 
-void removerQuebraLinha(char s[]) {
-    size_t ln = strlen(s);
-    if (ln > 0 && s[ln - 1] == '\n')
-        s[ln - 1] = '\0';
-}
+int MenuListagem() {
 
+    int opcaoLista;
+
+    printf("====================\n");
+    printf("Opções de Listagem \n");
+    printf("====================\n");
+
+    printf("0 - Voltar \n");
+    printf("1 - Listagem normal \n")
+    printf("2 - Listar por Sexo \n");
+    printf("3 - Listar em ordem alfabética \n");
+    printf("4 - Listar por data de nascimento \n");
+
+    scanf("%d", opcaoLista);
+    limparBuffer();
+
+    return opcaoLista;
+}
 
 int menuDisciplina() {
 
@@ -268,24 +334,6 @@ int menuDisciplina() {
 
     return opcaoDisciplina;
 
-}
-
-int menuGeral() {
-
-    int opcao;
-
-    printf("====================\n");
-    printf("Projeto Escola\n");
-    printf("====================\n");
-    printf("0 - Sair\n");
-    printf("1 - Aluno\n");
-    printf("2 - Professor\n");
-    printf("3 - Disciplina\n");
-
-    scanf("%d", &opcao);
-    limparBuffer();
-
-    return opcao;
 }
 
 int menuAluno() {
@@ -455,6 +503,14 @@ int CadastrarProfessor(Professor listaProfessor[], int qtd_professor) {
         return LISTA_CHEIA;
     } else {
 
+        printf("Digite a mátricula \n");
+        scanf("%d", &listaProfessor[qtd_professor].matricula);
+        limparBuffer();
+
+        if (listaProfessor[qtd_professor].matricula < 0) {
+            return MATRICULA_INVALIDA;
+        }
+
         printf("Digite o nome do professor: \n");
         fgets(listaProfessor[qtd_professor].nome,50,stdin);
         removerQuebraLinha(listaProfessor[qtd_professor].nome);
@@ -469,6 +525,9 @@ int CadastrarProfessor(Professor listaProfessor[], int qtd_professor) {
             return SEXO_INVALIDO;
         }
 
+        int datavalida;
+
+        do {
         printf("Digite o dia de nascimento: \n");
         scanf("%d", &listaProfessor[qtd_professor].DataNascimento.dia);
         limparBuffer();
@@ -481,19 +540,28 @@ int CadastrarProfessor(Professor listaProfessor[], int qtd_professor) {
         scanf("%d", &listaProfessor[qtd_professor].DataNascimento.ano);
         limparBuffer();
 
+        datavalida = valida_data_numeros(
+            listaProfessor[qtd_professor].DataNascimento.dia,
+            listaProfessor[qtd_professor].DataNascimento.mes,
+            listaProfessor[qtd_professor].DataNascimento.ano
+        )
+        if (!datavalida)
+            printf("Data Inválida! Por favor, digite novamente. \n");
+    } while (!datavalida);
+
+    int validarcpf;
+
+    do {
         printf("Digite o CPF: \n");
         fgets(listaProfessor[qtd_professor].cpf, 15, stdin);
         removerQuebraLinha(listaProfessor[qtd_professor].cpf);
 
-        printf("Digite a mátricula \n");
-        int matricula;
-        scanf("%d", &matricula);
-        limparBuffer();
+        validarcpf  = cpfvalido(listaProfessor[qtd_professor].cpf);
+        
+        if (!validarcpf)
+           printf("CPF Inválido. Digite apenas os 11 números. \n");
+    } while (!validarcpf);
 
-        if (matricula < 0) {
-            return MATRICULA_INVALIDA;
-        }
-        listaProfessor[qtd_professor].matricula = matricula; 
         listaProfessor[qtd_professor].ativo = 1;
 
             return CAD_PROFESSOR_SUCESSO;
@@ -509,6 +577,15 @@ int CadastrarAluno(Aluno listaAluno[], int qtd_aluno) {
     if (qtd_aluno == TAM_ALUNO) {
         return LISTA_CHEIA;
     } else {
+
+        printf("Digite a mátricula \n");
+        scanf("%d", &listaAluno[qtd_aluno].matricula);
+        limparBuffer();
+
+        if (listaAluno[qtd_aluno].matricula < 0) {
+            return MATRICULA_INVALIDA;
+        }
+
         printf("Digite o nome do aluno: \n");
         fgets(listaAluno[qtd_aluno].nome, 50, stdin);
         removerQuebraLinha(listaAluno[qtd_aluno].nome);
@@ -523,31 +600,44 @@ int CadastrarAluno(Aluno listaAluno[], int qtd_aluno) {
             return SEXO_INVALIDO;
         }
 
+        int datavalida;
+
+        do {
         printf("Digite o dia de nascimento: \n");
         scanf("%d", &listaAluno[qtd_aluno].DataNascimento.dia);
         limparBuffer();
 
-        printf("Digite o dia de nascimento: \n");
+        printf("Digite o mês de nascimento: \n");
         scanf("%d", &listaAluno[qtd_aluno].DataNascimento.mes);
         limparBuffer();
 
-        printf("Digite o dia de nascimento: \n");
+        printf("Digite o ano de nascimento: \n");
         scanf("%d", &listaAluno[qtd_aluno].DataNascimento.ano);
         limparBuffer();
 
+        datavalida = valida_data_numeros (
+            listaAluno[qtd_aluno].DataNascimento.dia,
+            listaAluno[qtd_aluno].DataNascimento.mes,
+            listaAluno[qtd_aluno].DataNascimento.ano
+        );
+
+        if(!datavalida)
+            printf("Data Inválida! Por favor, digite novamente. \n")
+    } while (!datavalida);
+
+    int validarcpf;
+
+    do {
         printf("Digite o CPF: \n");
-        fgets(listaAluno[qtd_aluno].cpf, 15, stdin);
+        fgets(listaAluno[qtd_aluno].cpf, 13, stdin);
         removerQuebraLinha(listaAluno[qtd_aluno].cpf);
 
-        printf("Digite a mátricula \n");
-        int matricula;
-        scanf("%d", &matricula);
-        limparBuffer();
+        validarcpf = cpfvalido(listaAluno[qtd_aluno].cpf);
 
-        if (matricula < 0) {
-            return MATRICULA_INVALIDA;
-        }
-        listaAluno[qtd_aluno].matricula = matricula; // Lista de alunos recebe o cadastro da mátricula em um vetor de tamanho qtd_aluno começando em 0
+        if (!validarcpf)
+            printf("CPF Inválido. Digite apenas os 11 números. \n");
+    } while (!validarcpf);
+
         listaAluno[qtd_aluno].ativo = 1;
 
         return CAD_ALUNO_SUCESSO;
@@ -568,8 +658,6 @@ void listarAluno(Aluno listaAluno[], int qtd_aluno) {
         }
     }
 }
-
-
 
 int atualizarAluno(Aluno listaAluno[], int qtd_aluno){
 
