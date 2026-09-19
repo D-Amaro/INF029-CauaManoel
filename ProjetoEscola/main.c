@@ -73,11 +73,13 @@ int main(void) {
                             int retorno = CadastrarAluno(listaAluno, qtd_aluno);
 
                             if (retorno == LISTA_CHEIA)
-                                printf("Lista de aluno cheia \n");
+                                printf("Limite máximo de alunos cadastrados. \n");
                             else if (retorno == MATRICULA_INVALIDA)
-                                printf("Mátricula Inválida \n");
+                                printf("Mátricula Inválida. \n");
+                            else if (retorno == SEXO_INVALIDO) 
+                                printf("O sexo informado é inválido. \n");
                             else {
-                                printf("Cadastrado com Sucesso \n");
+                                printf("Aluno cadastrado com sucesso!\n"); 
                                 qtd_aluno++;
                             }
 
@@ -97,11 +99,13 @@ int main(void) {
                                         break;
                                     }
                                     case 1: {
-                                        printf("=========================\n");
-                                        printf("  Listagem convencional\n");
-                                        printf("=========================\n");
 
                                         listarAluno(listaAluno, qtd_aluno);
+                                        break;
+                                    }
+                                    case 2: {
+
+                                        
                                     }
                                  }
                             }
@@ -110,19 +114,20 @@ int main(void) {
                             break;
                         }
 
-                         default: {
-                            printf("Opção Inválida \n");
+                        default: {
+                            printf("Opção Inválida. \n");
                         }
 
                         case 3: {
 
                             int retorno = atualizarAluno(listaAluno, qtd_aluno);
+
                             if (retorno == MATRICULA_INVALIDA) 
-                                printf("Matrícula inválida\n");
+                                printf("Matrícula inválida.\n");
                             else if (retorno == ATUALIZACAO_ALUNO_SUCESSO) {
-                                printf("Aluno atualizado com sucesso \n");
-                            } else { (retorno == MATRICULA_INEXISTENTE);
-                                printf("Matrícula inexistente\n");   
+                                printf("Nome atualizado com sucesso! \n");
+                            } else { 
+                                printf("Matrícula inexistente.\n");   
                             }
                             break;
 
@@ -132,12 +137,12 @@ int main(void) {
                             int retorno = excluirAluno(listaAluno, qtd_aluno);
 
                             if (retorno == MATRICULA_INVALIDA) 
-                                printf("Matrícula inválida\n");
+                                printf("Matrícula inválida.\n");
                             else if (retorno == EXCLUSAO_SUCESSO) {
-                                printf("Mátricula Excluída com sucesso \n");
+                                printf("Aluno excluído com sucesso! \n");
                                 qtd_aluno--; // decrementa a quantidade de alunos
-                            } else { (retorno == MATRICULA_INEXISTENTE);
-                                printf("Matrícula inexistente\n");
+                            } else { 
+                                printf("Matrícula inexistente.\n");
                             }
 
                             break;
@@ -172,10 +177,12 @@ int main(void) {
 
                             if (retorno == LISTA_CHEIA) 
                                 printf("Limite máximo de professores cadastrados \n");
-                            else if (retorno == MATRICULA_INVALIDA) { 
+                            else if (retorno == MATRICULA_INVALIDA)
                                 printf("Mátricula inválida \n");
-                            } else { 
-                                printf("Professor matrículo com sucesso \n");
+                            else if (retorno == SEXO_INVALIDO) 
+                                printf("O sexo informado é inválido. \n");
+                            else { 
+                                printf("Professor cadastrado com sucesso! \n");
                                 qtd_professor++;
                             }
                             break;
@@ -192,9 +199,9 @@ int main(void) {
                             int retorno = AtualizarProfessor(listaProfessor, qtd_professor);
 
                             if (retorno == MATRICULA_INVALIDA) 
-                                printf("Matrícula de professor inválida \n");
+                                printf("Matrícula de professor inválida. \n");
                             else if (retorno == ATUALIZACAO_PROFESSOR_SUCESSO) {
-                                printf("Atualizada com sucesso \n ");
+                                printf("Nome atualizado com sucesso! \n ");
                             } else { 
                                 printf("Matrícula Inexistente \n");
                             }
@@ -208,7 +215,7 @@ int main(void) {
                             if (retorno == MATRICULA_INVALIDA) {
                                 printf("Mátricula Invalida \n");
                             } else if (retorno == EXCLUSAO_SUCESSO) {
-                                printf("Professor Excluido com sucesso \n");
+                                printf("Professor Excluido com sucesso! \n");
                                 qtd_professor--;
                             } else {
                                 printf("Mátricula Inexistente \n");
@@ -223,6 +230,7 @@ int main(void) {
                 }
                 break;
             }
+
             case 3: {
                 printf("\n=======================\n");
                 printf("Menu de Disciplina\n");
@@ -304,7 +312,7 @@ int MenuListagem() {
     printf("====================\n");
 
     printf("0 - Voltar \n");
-    printf("1 - Listagem normal \n")
+    printf("1 - Listagem convencional \n")
     printf("2 - Listar por Sexo \n");
     printf("3 - Listar em ordem alfabética \n");
     printf("4 - Listar por data de nascimento \n");
@@ -313,6 +321,26 @@ int MenuListagem() {
     limparBuffer();
 
     return opcaoLista;
+}
+
+int menuRelatorios() {
+
+    int opcaoRelatorio;
+
+    printf("====================\n");
+    printf("Opções de Listagem \n");
+    printf("====================\n");
+
+    printf("0 - Voltar \n");
+    printf("1 - Aniversariantes do mês \n");
+    printf("2 - Busca por nome \n");
+    printf("3 - Alunos irregulares \n");
+    printf("4 - Disciplinas com mais de 40 vagas \n");
+
+    scanf("%d", opcaoRelatorio);
+    limparBuffer();
+
+    return opcaoRelatorio;
 }
 
 int menuDisciplina() {
@@ -410,7 +438,7 @@ int ExcluirProfessor(Professor listaProfessor[], int qtd_professor) {
     int achou = 0;
 
     printf("========================\n");
-    printf("Excluir Professor \n");
+    printf("    Excluir Professor \n");
     printf("========================\n");
     printf("Informe a matrícula para ser excluida: \n");
     scanf("%d", &matricula);
@@ -450,9 +478,11 @@ int AtualizarProfessor (Professor listaProfessor[], int qtd_professor) {
     int achou = 0;
     int novamatricula;
 
-    printf("Atualizar Professor \n");
+    printf("===========================\n");
+    printf("    Atualizar Professor \n");
+    printf("===========================\n");
 
-    printf("Informe a mátricula atual: \n");
+    printf("Informe a mátricula do usuario (ATT NOME): \n");
     int matricula;
     scanf("%d", &matricula);
     limparBuffer();
@@ -463,17 +493,10 @@ int AtualizarProfessor (Professor listaProfessor[], int qtd_professor) {
         for (int i = 0; i < qtd_professor; i++) 
             {
             if (matricula == listaProfessor[i].matricula && listaProfessor[i].ativo) {
-                printf("Digite a nova matrícula: \n ");
-                int novamatricula;
-                scanf("%d", &novamatricula);
-                limparBuffer();
 
-                if ( novamatricula < 0) {
-                    return MATRICULA_INVALIDA;
-                }
-
-                listaProfessor[i].matricula = novamatricula;
-
+                printf("Informe o novo nome: \n ");
+                fgets(listaProfessor[i].nome,50,stdin);
+                removerQuebraLinha(listaProfessor[i].nome);
                 achou = 1;
                 break;
             }
@@ -493,8 +516,17 @@ void ListarProfessor(Professor listaProfessor[], int qtd_professor) {
     } else { 
         for ( int i = 0; i < qtd_professor; i++)
         { 
-            if ( listaProfessor[i].ativo == 1)
+            if ( listaProfessor[i].ativo == 1) {
                 printf("Mátricula: %d \n", listaProfessor[i].matricula);
+                printf("Nome: %s\n", listaProfessor[i].nome);
+                printf("Sexo: %c\n", listaProfessor[i].sexo);
+                printf("Data de nascimento %d / %d / %d\n",
+            listaProfessor[i].DataNascimento.dia,
+            listaProfessor[i].DataNascimento.mes,
+            listaProfessor[i].DataNascimento.ano);
+                printf("CPF: %s", listaProfessor[i].cpf);
+                printf("--------------------------------------\n");
+            }
         }
     }
 }
@@ -549,7 +581,7 @@ int CadastrarProfessor(Professor listaProfessor[], int qtd_professor) {
             listaProfessor[qtd_professor].DataNascimento.dia,
             listaProfessor[qtd_professor].DataNascimento.mes,
             listaProfessor[qtd_professor].DataNascimento.ano
-        )
+        );
         if (!datavalida)
             printf("Data Inválida! Por favor, digite novamente. \n");
     } while (!datavalida);
@@ -558,7 +590,7 @@ int CadastrarProfessor(Professor listaProfessor[], int qtd_professor) {
 
     do {
         printf("Digite o CPF: \n");
-        fgets(listaProfessor[qtd_professor].cpf, 15, stdin);
+        fgets(listaProfessor[qtd_professor].cpf, 13, stdin);
         removerQuebraLinha(listaProfessor[qtd_professor].cpf);
 
         validarcpf  = cpfvalido(listaProfessor[qtd_professor].cpf);
@@ -652,14 +684,25 @@ int CadastrarAluno(Aluno listaAluno[], int qtd_aluno) {
 void listarAluno(Aluno listaAluno[], int qtd_aluno) {
     // void, pois está função não imprime
 
-    printf("Listar Aluno \n");
+    printf("=========================\n");
+    printf("  Listagem Convencional \n");
+    printf("=========================\n");
     if (qtd_aluno == 0) {
-        printf("Lista De Alunos Vazia\n");
+        printf("Lista de alunos vazia.\n");
     } else {
         for (int i = 0; i < qtd_aluno; i++)
         {
-            if (listaAluno[i].ativo == 1)
+            if (listaAluno[i].ativo == 1) {
                 printf("Mátricula: %d\n", listaAluno[i].matricula);
+                printf("Nome: %s\n", listaAluno[i].nome);
+                printf("Sexo: %c\n", listaAluno[i].sexo);
+                printf("Data de nascimento %d / %d / %d\n",
+            listaAluno[i].DataNascimento.dia,
+            listaAluno[i].DataNascimento.mes,
+            listaAluno[i].DataNascimento.ano);
+                printf("CPF: %s", listaAluno[i].cpf);
+                printf("--------------------------------------\n");
+            }
         }
     }
 }
@@ -681,18 +724,10 @@ int atualizarAluno(Aluno listaAluno[], int qtd_aluno){
         for (int i = 0; i < qtd_aluno; i++)
         {
             if (matricula == listaAluno[i].matricula && listaAluno[i].ativo) {
-                // atualizacao
-                printf("Digite a nova mátricula: \n");
-                scanf("%d", &novamatricula);
-                limparBuffer();
-               
-                if (novamatricula < 0) {
-                    return MATRICULA_INVALIDA;
-                }
-                // resolver questão de mátricula negativa
 
-                listaAluno[i].matricula = novamatricula;
-
+                printf("Informe o novo nome: \n ");
+                fgets(listaAluno[i].nome,50,stdin);
+                removerQuebraLinha(listaAluno[i].nome);
                 achou = 1;
                 break;
             }
