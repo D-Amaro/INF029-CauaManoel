@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include <estruturas.h>
+#include "estruturas.h"
 
 int compararData(DataNascimento data1, DataNascimento data2) {
 
