@@ -32,11 +32,13 @@ typedef struct prof {
 
 
 typedef struct disc {
-    char nomeDisciplina[50];
+    char nome[50];
     int codigoDisciplina;
     int semestre;
     int matriculaProfessor;
     int ativo;
+    int matriculaAlunos[TAM_MAX_ALUNOS];
+    int qtd_alunos_disciplina;
 } Disciplina;
 
 

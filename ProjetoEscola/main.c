@@ -36,7 +36,7 @@ int AtualizarProfessor(Professor listaProfessor[],int qtd_professor);
 int ExcluirProfessor(Professor listaProfessor[], int qtd_professor);
 
 
-int cadastrarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina);
+int cadastrarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina, Professor listaProfessor[], int qtd_professor);
 void listarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina);
 void atualizarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina);
 void excluirDisciplina(Disciplina listaDisciplina[], int qtd_disciplina);
@@ -231,7 +231,7 @@ int main(void) {
                                     }
                                     case 3: {
 
-                                        listarAlunoAlfabetica(listaProfessor, qtd_professor);
+                                        listarProfessorAlfabetica(listaProfessor, qtd_professor);
                                         break;
                                     }
                                     case 4: {
@@ -478,7 +478,7 @@ int menuProfessor() {
     return opcaoProfessor;
 }
 
-int cadastrarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina) {
+int cadastrarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina,Professor listaProfessor[], int qtd_professor) {
 
     printf("\n==========================\n");
     printf("    Cadastrar Disciplina\n");
@@ -487,14 +487,44 @@ int cadastrarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina) {
         return LISTA_CHEIA;
     } else {
         printf("Digite o código da discplina: \n");
-        int codigoDisciplina;
-        scanf("%d", &codigoDisciplina);
+        scanf("%d", &listaDisciplina[qtd_disciplina].codigoDisciplina);
+        limparBuffer();
 
-        if (codigoDisciplina < 0) {
+        if (listaDisciplina[qtd_disciplina].codigoDisciplina < 0) 
             return MATRICULA_INVALIDA;
-        }
+        
+        printf("Informe a matrícula do profesor: \n ");
+        int matriculaProfessor;
+        scanf("%d", &matriculaProfessor);
+        limparBuffer();
 
-        listaDisciplina[qtd_disciplina].codigoDisciplina = codigoDisciplina;
+        int achou;
+        for(int i = 0; i < qtd_professor; i++){
+            if(matriculaProfessor == listaProfessor[i].matricula && listaProfessor[i].ativo == 1) {
+                achou = 1;
+                break;
+            }
+        }
+        if(!achou)
+            return MATRICULA_INVALIDA;
+
+        int semestre;
+        do {
+            printf("Informe o nome da discplina: \n");
+            fgets(listaDisciplina[qtd_disciplina].nome,50,stdin);
+            removerQuebraLinha(listaDisciplina[qtd_disciplina].nome);
+
+            printf("Informe o semestre: \n");
+            scanf("%d", &semestre);
+            limparBuffer();
+
+            if(semestre < 1 || semestre > 8 )
+                printf("Disciplina disponivel entre semestre 1 e 8.\n");
+        } while(semestre < 1 || semestre > 8);
+
+        listaDisciplina[qtd_disciplina].semestre = semestre;
+        listaDisciplina[qtd_disciplina].matriculaProfessor = matriculaProfessor;
+        listaDisciplina[qtd_disciplina].qtd_alunos_disciplina = 0;
         listaDisciplina[qtd_disciplina].ativo = 1;
 
         return COD_DISCIPLINA_SUCESSO;
@@ -509,6 +539,8 @@ void atualizarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina) {
 
 }
 void excluirDisciplina(Disciplina listaDisciplina[], int qtd_disciplina){
+
+
     
 }
 
@@ -619,7 +651,7 @@ void listarProfessorSexo(Professor listaProfessor[], int qtd_professor) {
     printf("  Listagem por Sexo \n");
     printf("=========================\n");
     if (qtd_aluno == 0) {
-        printf("Lista de alunos vazia.\n");
+        printf("Lista de professores vazia.\n");
         return;
     }
 
@@ -652,12 +684,70 @@ void listarProfessorSexo(Professor listaProfessor[], int qtd_professor) {
 
 void listarProfessorAlfabetica(Professor listaProfessor,int qtd_professor) {
 
+    printf("====================================\n");
+    printf("  Listagem por ordem alfabética \n");
+    printf("====================================\n");
+    if (qtd_aluno == 0) {
+        printf("Lista de professores vazia.\n");
+        return;
+    }
 
+    for (int i = 0; i < qtd_professor - 1; i++) {
+        for (int j = 0; j < qtd_professor - i - 1; j++) {
+            if(strcmp(listaProfessor[j].nome, listaProfessor[j+1].nome) > 0) {
+                Professor temp = listaProfessor[j];
+                listaProfessor[j] = listaProfessor[j+1];
+                listaProfessor[j+1] = temp;
+            }
+        }
+    }
+    for ( int i = 0; i < qtd_professor; i++) {
+        if ( listaProfessor[i].ativo == 1) {
+            printf("Mátricula: %d \n", listaProfessor[i].matricula);
+            printf("Nome: %s\n", listaProfessor[i].nome);
+            printf("Sexo: %c\n", listaProfessor[i].sexo);
+            printf("Data de nascimento: %d / %d / %d\n",
+            listaProfessor[i].DataNascimento.dia,
+            listaProfessor[i].DataNascimento.mes,
+            listaProfessor[i].DataNascimento.ano);
+            printf("CPF: %s", listaProfessor[i].cpf);
+            printf("--------------------------------------\n");
+        }
+    }
 }
 
 void listarProfessorData(Professor listaProfessor,int qtd_professor) {
 
+    printf("====================================\n");
+    printf("  Listagem por data de nascimento \n");
+    printf("====================================\n");
+    if (qtd_aluno == 0) {
+        printf("Lista de professores vazia.\n");
+    return;
+    }
 
+    for(int i = 0; i < qtd_professor - 1; i++) {
+        for(int j = 0; j < qtd_professor - 1 - i; j++) {
+            if(compararData(listaProfessor[j].DataNascimento, listaProfessor[j+1].DataNascimento)) {
+                Professor temp = listaProfessor[j];
+                listaProfessor[j] = listaProfessor[j+1];
+                listaProfessor[j+1] = temp;
+            }
+        }
+    }
+    for ( int i = 0; i < qtd_professor; i++) {
+        if ( listaProfessor[i].ativo == 1) {
+            printf("Mátricula: %d \n", listaProfessor[i].matricula);
+            printf("Nome: %s\n", listaProfessor[i].nome);
+            printf("Sexo: %c\n", listaProfessor[i].sexo);
+            printf("Data de nascimento: %d / %d / %d\n",
+            listaProfessor[i].DataNascimento.dia,
+            listaProfessor[i].DataNascimento.mes,
+            listaProfessor[i].DataNascimento.ano);
+            printf("CPF: %s", listaProfessor[i].cpf);
+            printf("--------------------------------------\n");
+        }
+    }
 }
 
 int CadastrarProfessor(Professor listaProfessor[], int qtd_professor) {
