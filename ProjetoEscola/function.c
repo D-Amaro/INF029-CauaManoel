@@ -1,21 +1,23 @@
 #include <stdio.h>
+#include <string.h>
+#include <estruturas.h>
 
 int compararData(DataNascimento data1, DataNascimento data2) {
 
-    if (d1.ano != d2.ano)
-        return d1.ano > d2.ano;
+    if (data1.ano != data2.ano)
+        return data1.ano > data2.ano;
 
-    if (d1.mes != d2.mes)
-        return d1.mes > d2.mes;
+    if (data1.mes != data2.mes)
+        return data1.mes > data2.mes;
 
-    return d1.dia > d2.dia;
+    return data1.dia > data2.dia;
 }
 
 int cpfvalido(char cpf[]) {
     int len = strlen(cpf);
     if (len != 11 ) 
         return 0;
-    for (i = 0; i < len; i++) {
+    for (int i = 0; i < len; i++) {
         if (cpf[i] < '0' || cpf[i] > '9' )
         return 0;
     }

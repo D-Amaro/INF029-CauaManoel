@@ -11,6 +11,7 @@ int menuAluno();
 int menuProfessor();
 int menuDisciplina();
 int MenuListagem();
+int menuRelatorios();
 
 void limparBuffer(void);
 void removerQuebraLinha(char s[]);
@@ -355,12 +356,12 @@ int MenuListagem() {
     printf("====================\n");
 
     printf("0 - Voltar \n");
-    printf("1 - Listagem convencional \n")
+    printf("1 - Listagem convencional \n");
     printf("2 - Listar por Sexo \n");
     printf("3 - Listar em ordem alfabética \n");
     printf("4 - Listar por data de nascimento \n");
 
-    scanf("%d", opcaoLista);
+    scanf("%d", &opcaoLista);
     limparBuffer();
 
     return opcaoLista;
@@ -380,7 +381,7 @@ int menuRelatorios() {
     printf("3 - Alunos irregulares \n");
     printf("4 - Disciplinas com mais de 40 vagas \n");
 
-    scanf("%d", opcaoRelatorio);
+    scanf("%d", &opcaoRelatorio);
     limparBuffer();
 
     return opcaoRelatorio;
@@ -400,7 +401,7 @@ int menuDisciplina() {
     printf("3 - Atualizar Disciplina \n");
     printf("4 - Excluir Disciplina \n");
 
-    scanf("%d", opcaoDisciplina);
+    scanf("%d", &opcaoDisciplina);
     limparBuffer();
 
     return opcaoDisciplina;
@@ -499,7 +500,7 @@ int ExcluirProfessor(Professor listaProfessor[], int qtd_professor) {
                 for (int j = i; j < qtd_professor - 1; j++) { // shift para ajustar o vetor
                     listaProfessor[j].matricula = listaProfessor[j+1].matricula;
                     strcpy(listaProfessor[j].nome,listaProfessor[j+1].nome);
-                    strcpy(listaProfessor[j].cpf = listaProfessor[j+1].cpf);
+                    strcpy(listaProfessor[j].cpf, listaProfessor[j+1].cpf);
                     listaProfessor[j].sexo = listaProfessor[j+1].sexo;
                     listaProfessor[j].DataNascimento = listaProfessor[j+1].DataNascimento;
                     listaProfessor[j].ativo = listaProfessor[j+1].ativo;
@@ -768,11 +769,11 @@ void listarAlunoSexo(Aluno listaAluno[], int qtd_aluno) {
 
         sexovalido = toupper(sexovalido);
         if (sexovalido != 'M' && sexovalido != 'F')
-            printf("Sexo inválido! Digite M ou F \n")
+            printf("Sexo inválido! Digite M ou F \n");
 
         } while(sexovalido != 'M' && sexovalido != 'F');
 
-        for (i = 0; i < qtd_aluno; i++) {
+        for (int i = 0; i < qtd_aluno; i++) {
             if (listaAluno[i].ativo == 1 && listaAluno[i].sexo == sexovalido) {
                 printf("Mátricula: %d\n", listaAluno[i].matricula);
                 printf("Nome: %s\n", listaAluno[i].nome);
