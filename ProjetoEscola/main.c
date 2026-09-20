@@ -170,7 +170,7 @@ int main(void) {
             }
             case 2: {
                 printf("\n=======================\n");
-                printf("Menu do Professor\n");
+                printf("   Menu do Professor\n");
                 printf("\n=======================\n");
 
                 int SairProfessor = 0;
@@ -263,7 +263,6 @@ int main(void) {
                     SairDisciplina = 1;
                     break;
                     }
-
                     case 1: {
 
 
@@ -282,9 +281,39 @@ int main(void) {
             case 4: {
 
                 printf("\n=======================\n");
-                printf("Menu de Relatórios \n");
+                printf("    Menu de Relatórios \n");
                 printf("\n=======================\n");
 
+                int opcaoRelatorio;
+                int SairRelatorio = 0;
+
+                while(!SairRelatorio){
+
+                    opcaoRelatorio = menuRelatorios();
+
+                    switch(opcaoRelatorio){
+                        case 0: {
+                            SairRelatorio = 1;
+                            break;
+                        }
+                        case 1: {
+
+                        }
+                        case 2: {
+
+                        }
+                        case 3: {
+
+                        }
+                        case 4: {
+
+                        }
+                        default: {
+                            printf("Opção Inválida \n");
+                        }
+                    }
+                }
+                break;
             }
 
             default: {
@@ -342,7 +371,7 @@ int menuRelatorios() {
     int opcaoRelatorio;
 
     printf("====================\n");
-    printf("Opções de Listagem \n");
+    printf(" Menu de Relatórios \n");
     printf("====================\n");
 
     printf("0 - Voltar \n");
