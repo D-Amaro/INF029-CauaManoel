@@ -532,9 +532,28 @@ int cadastrarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina,Profess
     }
 }
 
-void listarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina){
+void listarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina) {
 
+    printf("=========================\n");
+    printf("  Listar Disciplinas \n");
+    printf("=========================\n");
+    if (qtd_disciplina == 0) {
+        printf("Lista de disciplinas vazia.\n");
+        return;
+    }
+
+    for (int i = 0; i < qtd_disciplina; i++) {
+        if (listaDisciplina[i].ativo == 1) {
+            printf("Codigo: %d\n", listaDisciplina[i].codigoDisciplina);
+            printf("Nome: %s\n", listaDisciplina[i].nome);
+            printf("Semestre: %d\n", listaDisciplina[i].semestre);
+            printf("Matricula do Professor: %d\n", listaDisciplina[i].matriculaProfessor);
+            printf("Alunos matriculados: %d\n", listaDisciplina[i].qtd_alunos_disciplina);
+            printf("--------------------------------------\n");
+        }
+    }
 }
+
 void atualizarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina) {
 
 }
@@ -604,8 +623,7 @@ int AtualizarProfessor (Professor listaProfessor[], int qtd_professor) {
     if ( matricula < 0) {
         return MATRICULA_INVALIDA;
     } else {
-        for (int i = 0; i < qtd_professor; i++) 
-            {
+        for (int i = 0; i < qtd_professor; i++) {
             if (matricula == listaProfessor[i].matricula && listaProfessor[i].ativo) {
 
                 printf("Informe o novo nome: \n ");
@@ -624,7 +642,9 @@ int AtualizarProfessor (Professor listaProfessor[], int qtd_professor) {
 
 void ListarProfessor(Professor listaProfessor[], int qtd_professor) {
 
+    printf("=========================\n");
     printf("Listar Professores \n");
+    printf("=========================\n");
     if (qtd_professor == 0) {
         printf("Lista de profesores vazia \n");
     } else { 
