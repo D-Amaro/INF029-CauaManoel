@@ -38,8 +38,12 @@ int ExcluirProfessor(Professor listaProfessor[], int qtd_professor);
 
 int cadastrarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina, Professor listaProfessor[], int qtd_professor);
 void listarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina);
-void atualizarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina);
-void excluirDisciplina(Disciplina listaDisciplina[], int qtd_disciplina);
+int atualizarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina);
+int excluirDisciplina(Disciplina listaDisciplina[], int qtd_disciplina);
+
+int inserirAlunoDisciplina(Disciplina listaDisciplina[], int qtd_disciplina, Aluno listaAluno[], int qtd_aluno);
+int excluirAlunoDisciplina(Disciplina listaDisciplina[], int qtd_disciplina);
+void listarUmaDisciplina(Disciplina listaDisciplina[], int qtd_disciplina, Aluno listaAluno[], int qtd_aluno);
 
 
 int main(void) {
@@ -84,7 +88,7 @@ int main(void) {
                             int retorno = CadastrarAluno(listaAluno, qtd_aluno);
 
                             if (retorno == LISTA_CHEIA)
-                                printf("Limite máximo de alunos cadastrados. \n");
+                                printf("Máximo de alunos cadastrados. \n");
                             else if (retorno == MATRICULA_INVALIDA)
                                 printf("Mátricula Inválida. \n");
                             else if (retorno == SEXO_INVALIDO) 
@@ -194,7 +198,7 @@ int main(void) {
                             int retorno = CadastrarProfessor(listaProfessor, qtd_professor);
 
                             if (retorno == LISTA_CHEIA) 
-                                printf("Limite máximo de professores cadastrados \n");
+                                printf("Máximo de professores cadastrados. \n");
                             else if (retorno == MATRICULA_INVALIDA)
                                 printf("Mátricula inválida \n");
                             else if (retorno == SEXO_INVALIDO) 
@@ -236,7 +240,7 @@ int main(void) {
                                     }
                                     case 4: {
 
-                                        listarAlunoData(listaProfessor, qtd_professor);
+                                        listarProfessorData(listaProfessor, qtd_professor);
                                         break;
                                     }
                                     default: {
@@ -275,7 +279,6 @@ int main(void) {
                             }
                             break;
                         }
-
                         default: {
                             printf("Opção Inválida \n");
                         }
@@ -304,19 +307,68 @@ int main(void) {
                     }
                     case 1: {
 
+                    int retorno = cadastrarDisciplina(listaDisciplina, qtd_disciplina);
 
+                    if (retorno == LISTA_CHEIA) 
+                        printf("Máximo de disciplinas cadastradas \n");
+                    else if (retorno == MATRICULA_INVALIDA)
+                        printf("Código de disciplina inválido. \n");
+                    else if (retorno == MATRICULA_INEXISTENTE) 
+                        printf("O professor informado não existe. \n");
+                    else { 
+                        printf("Disciplina cadastrada com sucesso! \n");
+                        qtd_disciplina++;
                     }
+                    break;
+                    }
+                    case 2: {
 
+                        listarDisciplina(listaDisciplina, qtd_disciplina);
+                        break;
+                    }
+                    case 3: {
 
+                        break;
+                    }
+                    case 4: {
 
+                         int retorno = atualizarDisciplina(listaDisciplina, qtd_disciplina);
 
+                        if (retorno == MATRICULA_INVALIDA)
+                            printf("Codigo invalido \n");
+                        else if (retorno == COD_DISCIPLINA_SUCESSO)
+                            printf("Disciplina atualizada com sucesso! \n");
+                        else
+                            printf("Disciplina não encontrada. \n");
+                        break;
+                    }
+                    case 5: {
+
+                        int retorno = excluirDisciplina(listaDisciplina, qtd_disciplina);
+
+                        if (retorno == MATRICULA_INVALIDA)
+                            printf("Codigo invalido. \n");
+                        else if (retorno == EXCLUSAO_SUCESSO) {
+                            printf("Disciplina excluida com sucesso!\n");
+                            qtd_disciplina--;
+                        } else
+                            printf("Disciplina nao encontrada. \n");
+                        break;
+                    }
+                    case 6: {
+
+                        break;
+                    }
+                    case 7: {
+
+                        break;
+                    } default: {
+                        printf("Opção Inválida \n");
+                        }
+                    }
                 }
-                }
-                    
-
                 break;
             }
-
             case 4: {
 
                 printf("\n=======================\n");
@@ -354,7 +406,6 @@ int main(void) {
                 }
                 break;
             }
-
             default: {
                 printf("Opção Inválida\n");
             }
@@ -390,7 +441,7 @@ int MenuListagem() {
     int opcaoLista;
 
     printf("====================\n");
-    printf("Opções de Listagem \n");
+    printf(" Opções de Listagem \n");
     printf("====================\n");
 
     printf("0 - Voltar \n");
@@ -429,15 +480,18 @@ int menuDisciplina() {
 
     int opcaoDisciplina;
 
-    printf("====================\n");
-    printf("Projeto Escola\n");
-    printf("====================\n");
+    printf("======================\n");
+    printf(" Menu de Disciplinas\n");
+    printf("=======================\n");
 
     printf("0 - Voltar \n");
     printf("1 - Cadastrar Disciplina \n");
     printf("2 - Listar Disciplina\n");
-    printf("3 - Atualizar Disciplina \n");
-    printf("4 - Excluir Disciplina \n");
+    printf("3 - Listar Disciplina (Dados alunos)\n");
+    printf("4 - Atualizar Disciplina \n");
+    printf("5 - Excluir Disciplina \n");
+    printf("6 - Inserir aluno em uma disciplina\n");
+    printf("7 - Excluir aluno de uma disciplina\n");
 
     scanf("%d", &opcaoDisciplina);
     limparBuffer();
@@ -506,7 +560,7 @@ int cadastrarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina,Profess
             }
         }
         if(!achou)
-            return MATRICULA_INVALIDA;
+            return MATRICULA_INEXISTENTE;
 
         int semestre;
         do {
@@ -556,14 +610,94 @@ void listarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina) {
 
 void atualizarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina) {
 
+    printf("===========================\n");
+    printf("   Atualizar Disciplina \n");
+    printf("===========================\n");
+
+    printf("Informe o codigo da disciplina: \n");
+    int codigoDisciplina;
+    scanf("%d", &codigoDisciplina);
+    limparBuffer();
+
+    if (codigoDisciplina < 0)
+        return MATRICULA_INVALIDA;
+
+    int achou = 0;
+    for (int i = 0; i < qtd_disciplina; i++) {
+        if (codigoDisciplina == listaDisciplina[i].codigoDisciplina && listaDisciplina[i].ativo) {
+
+            printf("Informe o novo nome: \n");
+            fgets(listaDisciplina[i].nome, 50, stdin);
+            removerQuebraLinha(listaDisciplina[i].nome);
+
+            int semestre;
+            do {
+                printf("Informe o novo semestre: \n");
+                scanf("%d", &semestre);
+                limparBuffer();
+
+                if (semestre < 1 || semestre > 8)
+                    printf("Disciplina disponivel entre semestre 1 e 8.\n");
+            } while (semestre < 1 || semestre > 8);
+
+            listaDisciplina[i].semestre = semestre;
+
+            achou = 1;
+            break;
+        }
+    }
+
+    if (achou)
+        return COD_DISCIPLINA_SUCESSO;
+    else
+        return MATRICULA_INEXISTENTE;
 }
+
 void excluirDisciplina(Disciplina listaDisciplina[], int qtd_disciplina){
 
-
+    printf("=========================\n");
+    printf("  Excluir Disciplinas \n");
+    printf("=========================\n");
     
+    printf("Informe o código da discplina a ser excluida: \n");
+    scanf("%d", &codigoDisciplina);
+    limparBuffer();
+
+    if(codigoDisciplina < 0) 
+        return MATRICULA_INVALIDA;
+
+        int achou;
+    for(int i = 0; i < qtd_disciplina; i++){
+        if(codigoDisciplina == listaDisciplina[i].codigoDisciplina && listaDisciplina[i].ativo == 1) {
+        
+            listaDisciplina[i].ativo = -1;
+
+            for(j = i; j < qtd_disciplina - 1; j++) {
+                listaDisciplina[j] = listaDisciplina[j+1];
+            }
+            achou = 1;
+            break;
+        }
+    }
+    if(achou)
+        return EXCLUSAO_SUCESSO;
+    else
+        return MATRICULA_INEXISTENTE;
 }
 
+int inserirAlunoDisciplina(Disciplina listaDisciplina[], int qtd_disciplina, Aluno listaAluno[], int qtd_aluno) {
 
+}
+
+int excluirAlunoDisciplina(Disciplina listaDisciplina[], int qtd_disciplina) {
+
+
+}
+
+void listarUmaDisciplina(Disciplina listaDisciplina[], int qtd_disciplina, Aluno listaAluno[], int qtd_aluno) {
+
+
+}
 
 int ExcluirProfessor(Professor listaProfessor[], int qtd_professor) {
 
@@ -577,11 +711,10 @@ int ExcluirProfessor(Professor listaProfessor[], int qtd_professor) {
     scanf("%d", &matricula);
     limparBuffer();
 
-    if (matricula < 0 ) {
+    if (matricula < 0 ) 
         return MATRICULA_INVALIDA;
-    } else {
-        for (int i = 0; i < qtd_professor; i++) 
-        {
+    
+        for (int i = 0; i < qtd_professor; i++) {
             if (matricula == listaProfessor[i].matricula) {
 
             listaProfessor[i].ativo = -1; // desativação lógica
@@ -603,8 +736,6 @@ int ExcluirProfessor(Professor listaProfessor[], int qtd_professor) {
             else 
                 return MATRICULA_INEXISTENTE;
     }
-}
-
 
 int AtualizarProfessor (Professor listaProfessor[], int qtd_professor) {
 
@@ -620,9 +751,9 @@ int AtualizarProfessor (Professor listaProfessor[], int qtd_professor) {
     scanf("%d", &matricula);
     limparBuffer();
 
-    if ( matricula < 0) {
+    if ( matricula < 0) 
         return MATRICULA_INVALIDA;
-    } else {
+    
         for (int i = 0; i < qtd_professor; i++) {
             if (matricula == listaProfessor[i].matricula && listaProfessor[i].ativo) {
 
@@ -637,8 +768,7 @@ int AtualizarProfessor (Professor listaProfessor[], int qtd_professor) {
                     return ATUALIZACAO_PROFESSOR_SUCESSO;
             else 
                     return MATRICULA_INEXISTENTE;
-    } 
-}
+} 
 
 void ListarProfessor(Professor listaProfessor[], int qtd_professor) {
 
@@ -1123,5 +1253,6 @@ int excluirAluno(Aluno listaAluno[], int qtd_aluno) {
         else
             return MATRICULA_INEXISTENTE;
     }
-
 }
+
+int aniversarianteMes(Aluno listaAluno[], Professor listaProfessor[])
