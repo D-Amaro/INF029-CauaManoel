@@ -35,7 +35,6 @@ void listarProfessorData(Professor listaProfessor[], int qtd_professor);
 int AtualizarProfessor(Professor listaProfessor[],int qtd_professor);
 int ExcluirProfessor(Professor listaProfessor[], int qtd_professor);
 
-
 int cadastrarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina, Professor listaProfessor[], int qtd_professor);
 void listarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina);
 int atualizarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina);
@@ -44,6 +43,8 @@ int excluirDisciplina(Disciplina listaDisciplina[], int qtd_disciplina);
 int inserirAlunoDisciplina(Disciplina listaDisciplina[], int qtd_disciplina, Aluno listaAluno[], int qtd_aluno);
 int excluirAlunoDisciplina(Disciplina listaDisciplina[], int qtd_disciplina);
 void listarUmaDisciplina(Disciplina listaDisciplina[], int qtd_disciplina, Aluno listaAluno[], int qtd_aluno);
+
+int aniversarianteMes(Aluno listaAluno[], Professor listaProfessor[], int qtd_aluno, int qtd_professor);
 
 
 int main(void) {
@@ -389,6 +390,8 @@ int main(void) {
                         }
                         case 1: {
 
+                            aniversarianteMes(listaAluno, listaProfessor, qtd_aluno, qtd_professor);
+                            break;
                         }
                         case 2: {
 
@@ -720,12 +723,7 @@ int ExcluirProfessor(Professor listaProfessor[], int qtd_professor) {
             listaProfessor[i].ativo = -1; // desativação lógica
 
                 for (int j = i; j < qtd_professor - 1; j++) { // shift para ajustar o vetor
-                    listaProfessor[j].matricula = listaProfessor[j+1].matricula;
-                    strcpy(listaProfessor[j].nome,listaProfessor[j+1].nome);
-                    strcpy(listaProfessor[j].cpf, listaProfessor[j+1].cpf);
-                    listaProfessor[j].sexo = listaProfessor[j+1].sexo;
-                    listaProfessor[j].DataNascimento = listaProfessor[j+1].DataNascimento;
-                    listaProfessor[j].ativo = listaProfessor[j+1].ativo;
+                    listaProfessor[j] = listaProfessor[j+1];
                 }
                 achou = 1;
                 break;
@@ -1219,7 +1217,10 @@ int atualizarAluno(Aluno listaAluno[], int qtd_aluno){
 
 int excluirAluno(Aluno listaAluno[], int qtd_aluno) {
 
-    printf("Excluir Aluno \n");
+    printf("========================\n");
+    printf("     Excluir Aluno \n");
+    printf("========================\n");
+
     printf("Digite a mátricula: \n");
     int matricula;
     scanf("%d", &matricula);
@@ -1255,4 +1256,44 @@ int excluirAluno(Aluno listaAluno[], int qtd_aluno) {
     }
 }
 
-int aniversarianteMes(Aluno listaAluno[], Professor listaProfessor[])
+int aniversarianteMes(Aluno listaAluno[], Professor listaProfessor[], int qtd_aluno, int qtd_professor) {
+
+    printf("================================\n");
+    printf("     Aniversariante do mês \n");
+    printf("================================\n");
+
+    int mes;
+    do {
+        printf("Informe o mês: \n");
+        scanf("%d", &mes);
+        limparBuffer();
+
+        if(mes < 1 || mes > 12)
+            printf("Por favor, informe um mês válido.\n")
+
+    } while (mes < 1 || mes > 12);
+
+    printf("-----Alunos-----")
+    int achouAluno;
+    for(int i = 0; i < qtd_aluno; i++) {
+        if(listaAluno[i].ativo == 1 && listaAluno[i].DataNascimento.mes == mes) {
+        printf("Nome: %s Matrícula: %d Dia: %d\n", listaAluno[i].nome, listaAluno[i].matricula, listaAluno[i].DataNascimento.dia);
+
+        achouAluno = 1;
+        }
+    }
+    if(!achouAluno)
+        printf("Nenhum aluno faz aniversário este mês!\n");
+
+    printf("-----Professores-----")
+    int achouProfessor;
+    for(int i = 0; i < qtd_professor; i++) {
+        if(listaProfessor[i].ativo == 1 && listaProfessor[i].DataNascimento.mes == mes) {
+        printf("Nome: %s Matrícula: %d Dia: %d\n", listaProfessor[i].nome, listaProfessor[i].matricula, listaProfessor[i].DataNascimento.dia);
+
+        achouProfessor = 1;
+        }
+    }
+    if(!achouProfessor)
+        printf("Nenhum professor faz aniversário este mês! \n");
+}
