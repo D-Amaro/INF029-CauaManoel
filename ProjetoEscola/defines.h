@@ -21,4 +21,6 @@
 
 #define SEXO_INVALIDO -10
 
+#define MATRICULADO -11
+
 #endif
