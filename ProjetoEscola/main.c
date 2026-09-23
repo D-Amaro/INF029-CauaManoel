@@ -2,8 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-#include "estruturas.h"
 #include "defines.h"
+#include "estruturas.h"
+
 
 // ================ PROTÓTIPOS ============== //
 int menuGeral();
@@ -311,7 +312,7 @@ int main(void) {
                     }
                     case 1: {
 
-                    int retorno = cadastrarDisciplina(listaDisciplina, qtd_disciplina);
+                    int retorno = cadastrarDisciplina(listaDisciplina, qtd_disciplina, listaProfessor, qtd_professor);
 
                     if (retorno == LISTA_CHEIA) 
                         printf("Máximo de disciplinas cadastradas \n");
@@ -585,7 +586,7 @@ int cadastrarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina,Profess
         scanf("%d", &matriculaProfessor);
         limparBuffer();
 
-        int achou;
+        int achou = 0;
         for(int i = 0; i < qtd_professor; i++){
             if(matriculaProfessor == listaProfessor[i].matricula && listaProfessor[i].ativo == 1) {
                 achou = 1;
@@ -641,7 +642,7 @@ void listarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina) {
     }
 }
 
-void atualizarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina) {
+int atualizarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina) {
 
     printf("===========================\n");
     printf("   Atualizar Disciplina \n");
@@ -686,26 +687,27 @@ void atualizarDisciplina(Disciplina listaDisciplina[], int qtd_disciplina) {
         return MATRICULA_INEXISTENTE;
 }
 
-void excluirDisciplina(Disciplina listaDisciplina[], int qtd_disciplina){
+int excluirDisciplina(Disciplina listaDisciplina[], int qtd_disciplina){
 
     printf("=========================\n");
     printf("  Excluir Disciplinas \n");
     printf("=========================\n");
     
     printf("Informe o código da discplina a ser excluida: \n");
+    int codigoDisciplina;
     scanf("%d", &codigoDisciplina);
     limparBuffer();
 
     if(codigoDisciplina < 0) 
         return MATRICULA_INVALIDA;
 
-        int achou;
+        int achou = 0;
     for(int i = 0; i < qtd_disciplina; i++){
         if(codigoDisciplina == listaDisciplina[i].codigoDisciplina && listaDisciplina[i].ativo == 1) {
         
             listaDisciplina[i].ativo = -1;
 
-            for(j = i; j < qtd_disciplina - 1; j++) {
+            for(int j = i; j < qtd_disciplina - 1; j++) {
                 listaDisciplina[j] = listaDisciplina[j+1];
             }
             achou = 1;
@@ -979,7 +981,7 @@ void listarProfessorSexo(Professor listaProfessor[], int qtd_professor) {
         } while(sexovalido != 'M' && sexovalido != 'F');
 
          for (int i = 0; i < qtd_aluno; i++) {
-            if (listaAluno[i].ativo == 1 && listaAluno[i].sexo == sexovalido) {
+            if (listaProfessor[i].ativo == 1 && listaProfessor[i].sexo == sexovalido) {
                 printf("Mátricula: %d \n", listaProfessor[i].matricula);
                 printf("Nome: %s\n", listaProfessor[i].nome);
                 printf("Sexo: %c\n", listaProfessor[i].sexo);
@@ -998,7 +1000,7 @@ void listarProfessorAlfabetica(Professor listaProfessor,int qtd_professor) {
     printf("====================================\n");
     printf("  Listagem por ordem alfabética \n");
     printf("====================================\n");
-    if (qtd_aluno == 0) {
+    if (qtd_professor == 0) {
         printf("Lista de professores vazia.\n");
         return;
     }
@@ -1419,7 +1421,7 @@ int excluirAluno(Aluno listaAluno[], int qtd_aluno) {
     }
 }
 
-int aniversarianteMes(Aluno listaAluno[], Professor listaProfessor[], int qtd_aluno, int qtd_professor) {
+void aniversarianteMes(Aluno listaAluno[], Professor listaProfessor[], int qtd_aluno, int qtd_professor) {
 
     printf("================================\n");
     printf("     Aniversariante do mês \n");
@@ -1432,7 +1434,7 @@ int aniversarianteMes(Aluno listaAluno[], Professor listaProfessor[], int qtd_al
         limparBuffer();
 
         if(mes < 1 || mes > 12)
-            printf("Por favor, informe um mês válido.\n")
+            printf("Por favor, informe um mês válido.\n");
 
     } while (mes < 1 || mes > 12);
 
@@ -1509,11 +1511,11 @@ void alunosComPoucasDisciplinas(Aluno listaAluno[], int qtd_aluno, Disciplina li
         int contador = 0;
 
         for (int j = 0; j < qtd_disciplina; j++) {
-            if (listaDisciplina[d].ativo != 1)
+            if (listaDisciplina[j].ativo != 1)
                 continue;
 
-            for (int k = 0; k < listaDisciplina[d].qtd_alunos_disciplina; k++) {
-                if (listaDisciplina[d].matriculaAlunos[a] == listaAluno[i].matricula) {
+            for (int k = 0; k < listaDisciplina[j].qtd_alunos_disciplina; k++) {
+                if (listaDisciplina[j].matriculaAlunos[k] == listaAluno[i].matricula) {
                     contador++;
                     break; // já contou essa disciplina, vai pra próxima disciplina
                 }

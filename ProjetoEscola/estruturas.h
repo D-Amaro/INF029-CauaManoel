@@ -1,5 +1,6 @@
 #ifndef ESTRUTURAS_H
 #define ESTRUTURAS_H
+#include "defines.h"
 
 // == Estruturas == //
 
