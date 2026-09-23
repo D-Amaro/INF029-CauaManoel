@@ -963,7 +963,7 @@ void listarProfessorSexo(Professor listaProfessor[], int qtd_professor) {
     printf("=========================\n");
     printf("  Listagem por Sexo \n");
     printf("=========================\n");
-    if (qtd_aluno == 0) {
+    if (qtd_professor == 0) {
         printf("Lista de professores vazia.\n");
         return;
     }
@@ -995,7 +995,7 @@ void listarProfessorSexo(Professor listaProfessor[], int qtd_professor) {
     }
 }
 
-void listarProfessorAlfabetica(Professor listaProfessor,int qtd_professor) {
+void listarProfessorAlfabetica(Professor listaProfessor[],int qtd_professor) {
 
     printf("====================================\n");
     printf("  Listagem por ordem alfabética \n");
@@ -1439,7 +1439,7 @@ void aniversarianteMes(Aluno listaAluno[], Professor listaProfessor[], int qtd_a
     } while (mes < 1 || mes > 12);
 
     printf("-----Alunos-----")
-    int achouAluno;
+    int achouAluno = 0;
     for(int i = 0; i < qtd_aluno; i++) {
         if(listaAluno[i].ativo == 1 && listaAluno[i].DataNascimento.mes == mes) {
         printf("Nome: %s Matrícula: %d Dia: %d\n", listaAluno[i].nome, listaAluno[i].matricula, listaAluno[i].DataNascimento.dia);
@@ -1450,8 +1450,8 @@ void aniversarianteMes(Aluno listaAluno[], Professor listaProfessor[], int qtd_a
     if(!achouAluno)
         printf("Nenhum aluno faz aniversário este mês!\n");
 
-    printf("-----Professores-----")
-    int achouProfessor;
+    printf("-----Professores-----");
+    int achouProfessor = 0;
     for(int i = 0; i < qtd_professor; i++) {
         if(listaProfessor[i].ativo == 1 && listaProfessor[i].DataNascimento.mes == mes) {
         printf("Nome: %s Matrícula: %d Dia: %d\n", listaProfessor[i].nome, listaProfessor[i].matricula, listaProfessor[i].DataNascimento.dia);
