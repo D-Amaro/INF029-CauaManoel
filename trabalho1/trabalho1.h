@@ -40,6 +40,9 @@ typedef struct Qtd
 
 } DiasMesesAnos;
 
+int ehBissexto(int ano);
+int ConversorInteiro(char s[]); 
+
 int somar(int x, int y); //função utilizada para testes
 int fatorial(int x); //função utilizada para testes
 int q1(char data[]);

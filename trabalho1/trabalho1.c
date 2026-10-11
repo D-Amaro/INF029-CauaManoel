@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include "trabalho1.h" 
 #include <stdlib.h>
+#include <ctype.h>
 
 DataQuebrada quebraData(char data[]);
 
@@ -89,30 +90,75 @@ int teste(int a)
     Não utilizar funções próprias de string (ex: strtok)   
     pode utilizar strlen para pegar o tamanho da string
  */
+
+int ConversorInteiro(char s[]) {
+ 
+    int resultado = 0;
+    for(int i = 0; s[i] != '\0'; i++) {
+        resultado = resultado * 10 + (s[i] - '0');
+    }
+    return resultado;
+}
+
+int ehBissexto(int ano) {
+    return ((ano % 4 == 0 && ano % 100 != 0) || (ano % 400 == 0) );
+}
+
 int q1(char data[])
 {
   int datavalida = 1;
-  char sDia[3];
-  char sMes[3];
-  char sAno[5];
-
-  int dia;
-  int mes;
-  int ano;
-  int i;
+  char sDia[3], sMes[3], sAno[5];
+  int dia, mes, ano;
+  int i, j = 0, parte = 0;
 
   for(i = 0; data[i] != '\0'; i++) {
-    
+    if (data[i] == '/')
+    {
+        if (parte == 0)
+            sDia[j] = '\0';
+        else if (parte == 1)
+             sMes[j] = '\0';
+        else datavalida = 0;
+    parte++;
+    j = 0;
+    }
+
+    else if (data[i] < '0' || data[i] > '9')
+        datavalida = 0;
+    else if (parte == 0 && j < 2)
+        sDia[j++] = data[i];
+    else if(parte == 1 && j < 2)
+        sMes[j++] = data[i];
+    else if (parte == 2 && j < 4)
+        sAno[j++] = data[i];
+    else 
+        datavalida = 0;
   }
-  dia = sDia[3] - '0';
+
+    if (parte == 2)
+        sAno[j] = '\0';
+    else datavalida = 0;
+    if (j != 2 && j != 4)
+        datavalida = 0;
 
 
+  if (datavalida)
+{
+  dia = ConversorInteiro(sDia);
+  mes = ConversorInteiro(sMes);
+  ano = ConversorInteiro(sAno);
+  if (j == 2) ano += 2000;
 
-  //quebrar a string data em strings sDia, sMes, sAno
-
-
-  //printf("%s\n", data);
-
+ if (mes < 1 || mes > 12)
+    datavalida = 0;
+  else
+  {
+    int diasMes[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
+    int maximo = diasMes[mes - 1];
+    if (mes == 2 && ehBissexto(ano)) maximo = 29;
+    if (dia < 1 || dia > maximo) datavalida = 0;
+  }
+}
   if (datavalida)
       return 1;
   else
@@ -148,6 +194,8 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
       dma.retorno = 3;
       return dma;
     }else{
+        DataQuebrada teste = quebraData("12/1/15");
+printf("%d %d %d %d\n", teste.iDia, teste.iMes, teste.iAno, teste.valido);
       //verifique se a data final não é menor que a data inicial
       
       //calcule a distancia entre as datas
@@ -173,7 +221,17 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
  */
 int q3(char *texto, char c, int isCaseSensitive)
 {
-    int qtdOcorrencias = -1;
+    int qtdOcorrencias = 0;
+
+for(int i = 0; texto[i] != '\0'; i++) {
+    if (isCaseSensitive == 1) {
+        if (texto[i] == c)
+            qtdOcorrencias++;
+        } else {
+        if (toupper(texto[i]) == toupper(c))
+            qtdOcorrencias++;
+        }
+    }
 
     return qtdOcorrencias;
 }
