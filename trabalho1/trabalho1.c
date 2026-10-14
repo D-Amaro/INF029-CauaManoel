@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include "trabalho1.h" 
 #include <stdlib.h>
+#include <string.h>
 #include <ctype.h>
 
 DataQuebrada quebraData(char data[]);
@@ -362,7 +363,7 @@ int q5(int num)
 {
     int invertido = 0;
     int digito;
-    int resultado;
+    int resultado = 0;
 
     while ( num != 0) {
     
