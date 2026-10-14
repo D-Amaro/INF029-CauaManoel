@@ -181,6 +181,16 @@ int q1(char data[])
     4 -> datainicial > datafinal
     Caso o cálculo esteja correto, os atributos qtdDias, qtdMeses e qtdAnos devem ser preenchidos com os valores correspondentes.
  */
+
+int diasNoMes(int mes, int ano) {
+    int diasMes[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    if (mes == 2 && ehBissexto(ano)) {
+        return 29;
+    }
+    return diasMes[mes - 1];
+}
+
+
 DiasMesesAnos q2(char datainicial[], char datafinal[])
 {
 
@@ -192,47 +202,51 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
     }else if (q1(datafinal) == 0){
       dma.retorno = 3;
       return dma;
-    }else{
-      DataQuebrada ini = quebraData(datainicial);
-      DataQuebrada fim = quebraData(datafinal);
-
-      if (fim.iAno < ini.iAno ||
-         (fim.iAno == ini.iAno && fim.iMes < ini.iMes) ||
-         (fim.iAno == ini.iAno && fim.iMes == ini.iMes && fim.iDia < ini.iDia))
-      {
-          dma.retorno = 4;
-          return dma;
-      }
-
-      if (ini.iDia == 29 && ini.iMes == 2 &&
-          fim.iDia == 28 && fim.iMes == 2 && !ehBissexto(fim.iAno))
-          fim.iDia = 29;
-
-      int anos  = fim.iAno - ini.iAno;
-      int meses = fim.iMes - ini.iMes;
-      int dias  = fim.iDia - ini.iDia;
-
-      if (dias < 0)
-      {
-          int mesRef = fim.iMes - 1;
-          int anoRef = fim.iAno;
-          if (mesRef == 0) { mesRef = 12; anoRef--; }
-          dias = dias + diasNoMes(mesRef, anoRef);
-          meses--;
-      }
-
-      if (meses < 0)
-      {
-          meses = meses + 12;
-          anos--;
-      }
-
-      dma.qtdAnos = anos;
-      dma.qtdMeses = meses;
-      dma.qtdDias = dias;
-      dma.retorno = 1;
-      return dma;
     }
+
+    DataQuebrada ini = quebraData(datainicial);
+    DataQuebrada fim = quebraData(datafinal);
+
+    if (ini.iAno > fim.iAno || 
+       (ini.iAno == fim.iAno && ini.iMes > fim.iMes) || 
+       (ini.iAno == fim.iAno && ini.iMes == fim.iMes && ini.iDia > fim.iDia)) 
+    {
+        dma.retorno = 4;
+        return dma;
+    }
+
+    if (ini.iDia == 29 && ini.iMes == 2 && fim.iDia == 28 && fim.iMes == 2 && !ehBissexto(fim.iAno)) {
+        fim.iDia = 29;
+    }
+
+    int anos = fim.iAno - ini.iAno;
+    int meses = fim.iMes - ini.iMes;
+    int dias = fim.iDia - ini.iDia;
+
+    if (dias < 0) {
+        meses--; 
+        int mesAnterior = fim.iMes - 1;
+        int anoAnterior = fim.iAno;
+        
+        if (mesAnterior == 0) {
+            mesAnterior = 12;
+            anoAnterior--;
+        }
+        
+        dias += diasNoMes(mesAnterior, anoAnterior);
+    }
+
+    if (meses < 0) {
+        anos--; 
+        meses += 12;
+    }
+
+    dma.qtdAnos = anos;
+    dma.qtdMeses = meses;
+    dma.qtdDias = dias;
+    dma.retorno = 1;
+
+    return dma;
 }
 
 /*
@@ -279,7 +293,34 @@ for(int i = 0; texto[i] != '\0'; i++) {
  */
 int q4(char *strTexto, char *strBusca, int posicoes[30])
 {
-    int qtdOcorrencias = -1;
+
+    int qtdOcorrencias = 0;
+    int idxPos = 0;
+    int i = 0, j = 0;
+
+    int tamTexto = 0, tamBusca = 0;
+    while (strTexto[tamTexto] != '\0') tamTexto++;
+    while (strBusca[tamBusca] != '\0') tamBusca++;
+
+    if (tamBusca == 0) return 0;
+
+    for (i = 0; i <= tamTexto - tamBusca; i++) {
+        int match = 1;
+        
+        for (j = 0; j < tamBusca; j++) {
+            if (strTexto[i + j] != strBusca[j]) {
+                match = 0;
+                break;
+            }
+        }
+
+        if (match == 1) {
+            posicoes[idxPos] = i + 1;            
+            posicoes[idxPos + 1] = i + tamBusca; 
+            idxPos += 2;                          
+            qtdOcorrencias++;
+        }
+    }
 
     return qtdOcorrencias;
 }
@@ -360,10 +401,49 @@ int q6(int numerobase, int numerobusca)
  */
 
  int q7(char matriz[8][10], char palavra[5])
- {
-     int achou;
-     return achou;
- }
+{
+    int linhas = 8;
+    int colunas = 10;
+    
+    int tamPalavra = 0;
+    while (palavra[tamPalavra] != '\0') tamPalavra++;
+
+    int dx[8] = {-1, -1, -1,  0, 0,  1, 1, 1}; 
+    int dy[8] = {-1,  0,  1, -1, 1, -1, 0, 1}; 
+
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            
+            if (matriz[i][j] == palavra[0]) {
+                
+                for (int dir = 0; dir < 8; dir++) {
+                    int k;
+                    int novaLinha = i;
+                    int novaColuna = j;
+                    
+                    for (k = 1; k < tamPalavra; k++) {
+                        novaLinha += dx[dir];
+                        novaColuna += dy[dir];
+                        
+                        if (novaLinha < 0 || novaLinha >= linhas || novaColuna < 0 || novaColuna >= colunas) {
+                            break;
+                        }
+                        
+                        if (matriz[novaLinha][novaColuna] != palavra[k]) {
+                            break;
+                        }
+                    }
+                    
+                    if (k == tamPalavra) {
+                        return 1;
+                    }
+                }
+            }
+        }
+    }
+    
+    return 0; 
+}
 
 
 

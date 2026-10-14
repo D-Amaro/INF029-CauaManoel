@@ -42,6 +42,7 @@ typedef struct Qtd
 
 int ehBissexto(int ano);
 int ConversorInteiro(char s[]); 
+int diasNoMes(int mes, int ano);
 
 int somar(int x, int y); //função utilizada para testes
 int fatorial(int x); //função utilizada para testes
