@@ -184,7 +184,6 @@ int q1(char data[])
 DiasMesesAnos q2(char datainicial[], char datafinal[])
 {
 
-    //calcule os dados e armazene nas três variáveis a seguir
     DiasMesesAnos dma;
 
     if (q1(datainicial) == 0){
@@ -194,19 +193,46 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
       dma.retorno = 3;
       return dma;
     }else{
-        DataQuebrada teste = quebraData("12/1/15");
-printf("%d %d %d %d\n", teste.iDia, teste.iMes, teste.iAno, teste.valido);
-      //verifique se a data final não é menor que a data inicial
-      
-      //calcule a distancia entre as datas
+      DataQuebrada ini = quebraData(datainicial);
+      DataQuebrada fim = quebraData(datafinal);
 
+      if (fim.iAno < ini.iAno ||
+         (fim.iAno == ini.iAno && fim.iMes < ini.iMes) ||
+         (fim.iAno == ini.iAno && fim.iMes == ini.iMes && fim.iDia < ini.iDia))
+      {
+          dma.retorno = 4;
+          return dma;
+      }
 
-      //se tudo der certo
+      if (ini.iDia == 29 && ini.iMes == 2 &&
+          fim.iDia == 28 && fim.iMes == 2 && !ehBissexto(fim.iAno))
+          fim.iDia = 29;
+
+      int anos  = fim.iAno - ini.iAno;
+      int meses = fim.iMes - ini.iMes;
+      int dias  = fim.iDia - ini.iDia;
+
+      if (dias < 0)
+      {
+          int mesRef = fim.iMes - 1;
+          int anoRef = fim.iAno;
+          if (mesRef == 0) { mesRef = 12; anoRef--; }
+          dias = dias + diasNoMes(mesRef, anoRef);
+          meses--;
+      }
+
+      if (meses < 0)
+      {
+          meses = meses + 12;
+          anos--;
+      }
+
+      dma.qtdAnos = anos;
+      dma.qtdMeses = meses;
+      dma.qtdDias = dias;
       dma.retorno = 1;
       return dma;
-      
     }
-    
 }
 
 /*
@@ -270,16 +296,18 @@ int q4(char *strTexto, char *strBusca, int posicoes[30])
 
 int q5(int num)
 {
-    int resultado = 0;
-    int digito = 0;
+    int invertido = 0;
+    int digito;
 
-    while(num != 0) {
+    while ( num != 0) {
+    
         digito = num % 10;
-        invertido = invertido * 10 + digito;
+        resultado = resultado * 10 + digito;
         num = num / 10;
+
     }
 
-    return invertido;
+    return resultado;
 }
 
 /*
@@ -294,7 +322,30 @@ int q5(int num)
 
 int q6(int numerobase, int numerobusca)
 {
-    int qtdOcorrencias;
+    int qtdOcorrencias = 0;
+    int divisor = 10;             
+    int copia = numerobusca;      
+
+    while (copia >= 10)
+    {
+        divisor = divisor * 10;
+        copia = copia / 10;
+    }
+
+ 
+    while (numerobase > 0)
+    {
+        if (numerobase % divisor == numerobusca)
+        {
+            qtdOcorrencias++;                      
+            numerobase = numerobase / divisor;  
+        }
+        else
+        {
+            numerobase = numerobase / 10;       
+        }
+    }
+
     return qtdOcorrencias;
 }
 
