@@ -293,35 +293,58 @@ for(int i = 0; texto[i] != '\0'; i++) {
  */
 int q4(char *strTexto, char *strBusca, int posicoes[30])
 {
-
     int qtdOcorrencias = 0;
-    int idxPos = 0;
-    int i = 0, j = 0;
+    int sizeText = strlen(strTexto);
+    int sizeSearch = strlen(strBusca);
+    
+    if(sizeText == 0 || sizeSearch == 0) return 0;
 
-    int tamTexto = 0, tamBusca = 0;
-    while (strTexto[tamTexto] != '\0') tamTexto++;
-    while (strBusca[tamBusca] != '\0') tamBusca++;
+    int n = 0;
+    char new_text[strlen(strTexto) + 1]; //Para colocar o '\0' dps
+    char new_search[strlen(strBusca) + 1]; //Para Colocar o '\0' dps.
 
-    if (tamBusca == 0) return 0;
-
-    for (i = 0; i <= tamTexto - tamBusca; i++) {
-        int match = 1;
-        
-        for (j = 0; j < tamBusca; j++) {
-            if (strTexto[i + j] != strBusca[j]) {
-                match = 0;
-                break;
-            }
-        }
-
-        if (match == 1) {
-            posicoes[idxPos] = i + 1;            
-            posicoes[idxPos + 1] = i + tamBusca; 
-            idxPos += 2;                          
-            qtdOcorrencias++;
+    for(int i = 0; i < sizeText; i++) {
+        if(strTexto[i] != -61) {//Diferenciar acento, já que consomem 2 espaços
+        new_text[n] = strTexto[i];
+        n++;
         }
     }
+    new_text[n] = '\0';
 
+    n = 0;
+    for(int i = 0; i < sizeSearch; i++) {
+        if(strBusca[i] != -61) {//Diferenciar acento, já que consomem 2 espaços
+        new_search[n] = strBusca[i];
+        n++;
+        }
+    }
+    new_search[n] = '\0';
+    int verify_two = 0;
+    n = strlen(new_search);
+
+    for(int i = 0; new_text[i] != '\0'; i++) {
+
+        if(new_text[i] == new_search[0]) {
+            int j = i + 1;
+            int contem = 1;
+            for(int k = 1; new_search[k] != '\0'; k++) {
+
+                if(new_text[j] != new_search[k]){
+                contem = 0;
+                break;
+                }
+                j++;
+            }
+            
+            if(contem == 1) {
+            posicoes[verify_two] = i + 1;
+            verify_two++;
+            posicoes[verify_two] = i + n;
+            verify_two++;
+            qtdOcorrencias++;
+            }
+        }
+    }
     return qtdOcorrencias;
 }
 
