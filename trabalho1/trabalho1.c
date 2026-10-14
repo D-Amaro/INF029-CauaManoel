@@ -339,6 +339,7 @@ int q5(int num)
 {
     int invertido = 0;
     int digito;
+    int resultado;
 
     while ( num != 0) {
     
