@@ -5,6 +5,7 @@
 
 
 int menu();
+void lerInteiro(int *valor);
 void opcaoInserir();
 void opcaoListarTodas();
 void opcaoListarOrdenadasPorEstrutura();
@@ -12,6 +13,24 @@ void opcaoListarTodosOrdenados();
 void opcaoExcluir();
 void opcaoAumentar();
 int contarTotalElementos();
+
+
+void lerInteiro(int *valor)
+{
+    int r, c;
+    while ((r = scanf("%d", valor)) != 1)
+    {
+        if (r == EOF)
+        {
+            finalizar();
+            exit(0);
+        }
+        // descarta o resto da linha digitada e pede de novo
+        while ((c = getchar()) != '\n' && c != EOF)
+            ;
+        printf("Entrada invalida. Digite um numero: ");
+    }
+}
 
 int menu()
 {
@@ -25,7 +44,7 @@ int menu()
     printf("6 - Aumentar o tamanho de uma estrutura auxiliar\n");
     printf("7 - Sair\n");
     printf("Opcao: ");
-    scanf("%d", &op);
+    lerInteiro(&op);
     return op;
 }
 
@@ -47,18 +66,18 @@ void opcaoInserir()
     int posicao, valor, tamanho, ret;
 
     printf("Posicao (1..10): ");
-    scanf("%d", &posicao);
+    lerInteiro(&posicao);
     printf("Numero a inserir: ");
-    scanf("%d", &valor);
+    lerInteiro(&valor);
 
     ret = inserirNumeroEmEstrutura(posicao, valor);
 
-
+    
     if (ret == SEM_ESTRUTURA_AUXILIAR)
     {
         printf("Ainda nao existe estrutura auxiliar nessa posicao.\n");
         printf("Tamanho total da estrutura auxiliar: ");
-        scanf("%d", &tamanho);
+        lerInteiro(&tamanho);
 
         ret = criarEstruturaAuxiliar(posicao, tamanho);
         if (ret == SUCESSO)
@@ -107,7 +126,8 @@ void opcaoListarTodas()
         }
         else
         {
-        
+            /* ANOTAÇÃO 19 - VLA (vetor de tamanho variável): qtd é
+               conhecido só em tempo de execução, e aqui já sabemos que é > 0. */
             int vetorAux[qtd];
             getDadosEstruturaAuxiliar(i, vetorAux);
             for (j = 0; j < qtd; j++)
@@ -172,9 +192,9 @@ void opcaoExcluir()
     int posicao, valor, ret;
 
     printf("Posicao (1..10): ");
-    scanf("%d", &posicao);
+    lerInteiro(&posicao);
     printf("Numero a excluir: ");
-    scanf("%d", &valor);
+    lerInteiro(&valor);
 
     ret = excluirNumeroEspecificoDeEstrutura(posicao, valor);
 
@@ -195,9 +215,9 @@ void opcaoAumentar()
     int posicao, extra, ret;
 
     printf("Posicao (1..10): ");
-    scanf("%d", &posicao);
+    lerInteiro(&posicao);
     printf("Quantas posicoes extras? ");
-    scanf("%d", &extra);
+    lerInteiro(&extra);
 
     ret = modificarTamanhoEstruturaAuxiliar(posicao, extra);
 
